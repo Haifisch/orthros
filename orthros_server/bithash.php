@@ -127,25 +127,25 @@
 		if (!openssl_private_decrypt(base64_decode(file_get_contents("./users/".$UUID."/temp_key", true)), $decrypted_key, file_get_contents("/etc/bithash/private_key.pem", true))) {
         		die ('{"result":"error while decrypting key", "called":"send", "error":1}');
 		} 
-	    	if (!strcmp($_POST["key"], $decrypted_key)) {
-	        	die ('{"result":"keys do not match up", "called":"send", "error":1}');
-	    	}
+    	if (!strcmp($_POST["key"], $decrypted_key)) {
+        	die ('{"result":"keys do not match up", "called":"send", "error":1}');
+    	}
 		// check if requested UUID (user) exsists and setup recieving location
 		$receiverURL = './users/'.$_GET["receiver"];
 		if (!checkFile($receiverURL)) {
-                	die('{"result":"public key does not exsist for provided UUID", "called":"send", "error":1}');
-        	} else {
+        	die('{"result":"public key does not exsist for provided UUID", "called":"send", "error":1}');
+        } else {
 			if (!checkFile($receiverURL.'queue')) {
-                		$newDir = $receiverURL.'/queue';
-                		mkdir($newDir, 0777, true);
-            		}
+        		$newDir = $receiverURL.'/queue';
+        		mkdir($newDir, 0777, true);
+    		}
 		}
 		$date = date_create();
 		$timestamp = date_timestamp_get($date);
 		$quedMessage = fopen($receiverURL.'/queue/'.$timestamp, "w") or die('{"result":"couldnt create queue file", "error":1}');
-        	fwrite($quedMessage, $_POST['msg']);
-        	fclose($quedMessage);
-        	echo '{"result":"message written to queue", "called":"send", "error":0}';
+    	fwrite($quedMessage, $_POST['msg']);
+    	fclose($quedMessage);
+    	echo '{"result":"message written to queue", "called":"send", "error":0}';
 	}elseif ($action == "list") {
 		$msgs = array_diff(scandir($globalUserDir.'/queue/', 1), array('..', '.'));
 		if (count($msgs) > 0) {

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* 
 	Something something copyright
 
@@ -18,8 +19,6 @@ var NodeRSA = require('node-rsa');
 var crypto = require('crypto');
 var read = require('read');
 var request = require('request');
-var SegfaultHandler = require('segfault-handler');
-var deasync = require('deasync');
 var ursa = require('ursa');
 // global objects
 var AESCrypt = {};
@@ -27,9 +26,10 @@ var key = new NodeRSA();
 var args = process.argv.slice(2);
 var version = "v1.0.0"
 var help = "Command line options;"
-			+ "\n./orthros send [Recieving UUID] [Message] - Sends supplied message to UUID" 
+			+ "\n./orthros send [Recieving UUID] \"[Message]\" - Sends supplied message to UUID, put message in quotes." 
 			+ "\n./orthros check - Checks for messages in queue"
-			+ "\n./orthros read [Message ID] - Decrypts and reads message for ID";
+			+ "\n./orthros read [Message ID] - Decrypts and reads message for ID"
+			+ "\n./orthros delete [Message ID] - Deletes a message given it's ID"
 var orthros_settings =  process.env['HOME'] + "/.orthros";
 var orthros_config = orthros_settings + "/config.json";
 var orthros_api_url = "http://orthros.ninja/api/bithash.php?"
@@ -118,7 +118,7 @@ function all_msgs_in_que (uuid, callback) {
 		  	console.log("No messages found!");
 		  	callback(null);
 		} else if (parsedRes["error"] == 0) {
-		  	console.log("Messages in que;".green);
+		  	console.log("Messages in queue;".green);
 		  	var msgs = parsedRes["msgs"];
 		  	callback(msgs);
 		};
@@ -140,11 +140,16 @@ function check_for_messages (argument) {
 			console.log("We're missing the user uuid!".red);
 		} else {
 			var msgs = all_msgs_in_que(uuid_ret, function (msgs_qued) {
-				for (var i = 0; i < msgs_qued.length; i++) {
+				if (msgs_qued != null) {
+					for (var i = 0; i < msgs_qued.length; i++) {
 					sender_for_msg(msgs_qued[i], uuid_ret, function (sender) {
+						var d = new Date(0);
+						d.setUTCSeconds(sender[0]);
 						console.log(('Msg ID: '+sender[0]).blue)
-						console.log(('	From: '+sender[1]).green);
+						console.log(('\tFrom: '+sender[1]).green);
+						console.log(('\tSent: '+d).green)
 					})
+				};
 				};
 			})
 		};
@@ -152,7 +157,7 @@ function check_for_messages (argument) {
 }
 
 function get_private_key (callback) {
-	read({ prompt : 'Decrypt password:', silent : true }, function (err, pass) {
+	read({ prompt : 'Password:', silent : true }, function (err, pass) {
 		if (pass.length > 10) {
 			read({ prompt : 'Confirm password: ', silent : true }, function (err, pass_conf) {
 				if (pass == pass_conf) {
@@ -189,10 +194,64 @@ function read_message (msg_id) {
 					crypted_msg = crypted_msg.replace(/ /g,"+");
 					var privatekey = get_private_key(function (key) {
 						ursa_key = ursa.createPrivateKey(key);
-						var dec_msg = ursa_key.decrypt(crypted_msg, 'base64', 'utf8', ursa.RSA_PKCS1_PADDING);
+						var dec_msg = ursa_key.decrypt(crypted_msg, 'base64', 'utf8');
 						console.log("Message: ".green + dec_msg)
 					});
 				};
+			});
+		};
+	});
+}
+
+function send_message (receiver, message) {
+	var uuidFromConfig = uuid_from_config(function (uuid_ret) { 
+		if (uuid_ret === null) {
+			console.log("We're missing the user uuid!".red);
+		} else {
+			request.get(orthros_api_url+'action=download&UUID='+uuid_ret+'&receiver='+receiver, function(error, response, body) {
+				var parsedRes = JSON.parse(body);
+				if (parsedRes["pub"]) {
+					ursa_key = ursa.createPublicKey(parsedRes["pub"]);
+					var enc_msg = ursa_key.encrypt(message, 'utf8', 'base64');
+					request.get(orthros_api_url+'action=gen_key&UUID='+uuid_ret, function(error, response, body) {
+						var parsedRes = JSON.parse(body);
+						var privatekey = get_private_key(function (key) {
+							var send_key = parsedRes["key"]
+							ursa_key = ursa.createPrivateKey(key);
+							var dec_key = ursa_key.decrypt(send_key, 'base64', 'utf8', ursa.RSA_PKCS1_PADDING);
+							var json_msg = {"msg":enc_msg, "sender":uuid_ret}
+							request.post({
+							  headers: {'content-type' : 'application/x-www-form-urlencoded'},
+							  url:     orthros_api_url+'action=send&UUID='+uuid_ret+'&receiver='+receiver+'&key='+dec_key,
+							  body:    "msg="+JSON.stringify(json_msg)
+							}, function(error, response, body){
+								var parsedRes = JSON.parse(body);
+								if (parsedRes["error"] == 1) {
+									console.log("Something went wrong while sending!".red);
+								} else if (parsedRes["error"] == 0) {
+									console.log("Message written to queue!".green)
+								}
+							});
+						});
+					});
+				};
+			});
+		};
+	});
+}
+
+function delete_message (msg_id) {
+	var uuidFromConfig = uuid_from_config(function (uuid_ret) { 
+		if (uuid_ret === null) {
+			console.log("We're missing the user uuid!".red);
+		} else {
+			request.get(orthros_api_url+'action=delete_msg&UUID='+uuid_ret+'&msg_id='+msg_id, function(error, response, body) {
+				var parsedRes = JSON.parse(body);
+				if (parsedRes["error"] == 1) {
+					console.log("Message has already been deleted or doesn't exsist!".red)
+				} else if (parsedRes["error"] == 0) {
+					console.log("Message deleted successfully!");
+				}
 			});
 		};
 	});
@@ -260,7 +319,16 @@ function setupAccount (argument) {
 function checkArgs () {
 	if (args.length > 0) {
 		if (args[0] == "send") {
-			console.log("going to send.")
+			switch (args) {
+				case 1:
+					if (args[1] == null) {console.log("We're missing the recieving ID"); return 0;};
+					break;
+				case 2: 
+					if (args[1] == null) {console.log("We're missing the message to send"); return 0;};
+					break;
+				default:
+			}
+			send_message(args[1], args[2]);
 		} else if (args[0] == "check") {
 			check_for_messages();
 		} else if (args[0] == "read") {
@@ -270,6 +338,15 @@ function checkArgs () {
 				console.log("Retrieving message: "+args[1])
 				read_message(args[1]);
 			}
+		} else if (args[0] == "delete") {
+			if (args[1] == null) {
+				console.log("We're missing the message ID!".red)
+			} else {
+				console.log("Deleting message: "+args[1])
+				delete_message(args[1]);
+			}
+		} else {
+			console.log(help);
 		}
 	} else {
 		console.log(help);
@@ -277,7 +354,6 @@ function checkArgs () {
 }
 
 function main (argument) {
-	// Check for folder, if none exsist, make it. 
 	console.log(("Orthros Messenger " + version).bgMagenta);
 	var checkDir = checkConfigDirectory(function (doesExsist) {
 		if (doesExsist == true) {
