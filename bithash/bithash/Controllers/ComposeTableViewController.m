@@ -19,6 +19,7 @@
 }
 @property (strong, nonatomic) IBOutlet UITextView *messageBox;
 @property (strong, nonatomic) IBOutlet UITextField *recievingIDBox;
+@property (strong, nonatomic) IBOutlet UILabel *counterLabel;
 
 @end
 
@@ -84,29 +85,31 @@
 
 -(void)sendMessage:(NSString *)msg withUUID:(NSString *)to_uuid {
     BDRSACryptor *RSACryptor = [[BDRSACryptor alloc] init];
-    BDError *error;
     NSString *pub = [orthros publicKeyFor:to_uuid];
     if (!pub) {
         [KVNProgress showErrorWithStatus:@"User's pub was not found... try again later."];
     } else {
+        BDError *error;
         NSString *cipherText = [RSACryptor encrypt:msg
                                                key:pub
                                              error:error];
-        NSString *enc_key = [orthros genNonce];
-        if (![orthros send:cipherText toUser:to_uuid withKey:[RSACryptor decrypt:enc_key key:[JNKeychain loadValueForKey:PRIV_KEY] error:nil]]) {
-            [KVNProgress showErrorWithStatus:@"Error'd out! Try again." completion:^{ // give better diagnostics when this happens pl0x
-                [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                    [KVNProgress dismiss];
+        if (!cipherText) {
+            [KVNProgress showErrorWithStatus:@"Error'd out! Try again." completion:^{}];
+        } else {
+            NSString *enc_key = [orthros genNonce];
+            if (![orthros send:cipherText toUser:to_uuid withKey:[RSACryptor decrypt:enc_key key:[JNKeychain loadValueForKey:PRIV_KEY] error:nil]]) {
+                [KVNProgress showErrorWithStatus:@"Error'd out! Try again." completion:^{ // give better diagnostics when this happens pl0x
+                    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                        [KVNProgress dismiss];
+                    }];
+                    
                 }];
-                
-            }];
-        }else {
-            [KVNProgress showSuccess];
-            [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                [KVNProgress dismiss];
-            }];
+            }else {
+                [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                    [KVNProgress showSuccess];
+                }];
+            }
         }
-
     }
     [KVNProgress dismiss];
 }
@@ -122,6 +125,15 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSInteger textlength = [textView.text length] - range.length + [text length];
+    if (textlength > 383) {
+        return NO;
+    }
+    self.counterLabel.text = [NSString stringWithFormat:@"%li/383", (long)textlength];
+    return YES;
 }
 
 /* NEED SSL ON SERVER FIRST

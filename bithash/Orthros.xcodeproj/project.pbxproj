@@ -13,6 +13,16 @@
 		B9075F2E1B0ACEDD00F7B7D8 /* MyQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9075F2D1B0ACEDD00F7B7D8 /* MyQRViewController.m */; };
 		B9075F311B0AD87A00F7B7D8 /* ScanQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9075F301B0AD87A00F7B7D8 /* ScanQRViewController.m */; };
 		B9075F331B0AD8B600F7B7D8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9075F321B0AD8B600F7B7D8 /* AVFoundation.framework */; };
+		B92BB9B61B4B39D900B87CA8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B92BB9B51B4B39D900B87CA8 /* AppDelegate.m */; };
+		B92BB9B81B4B39D900B87CA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B92BB9B71B4B39D900B87CA8 /* main.m */; };
+		B92BB9BB1B4B39D900B87CA8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B92BB9BA1B4B39D900B87CA8 /* ViewController.m */; };
+		B92BB9BD1B4B39D900B87CA8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B92BB9BC1B4B39D900B87CA8 /* Images.xcassets */; };
+		B92BB9C01B4B39D900B87CA8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B92BB9BE1B4B39D900B87CA8 /* Main.storyboard */; };
+		B92BB9CC1B4B39D900B87CA8 /* Orthros___MacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B92BB9CB1B4B39D900B87CA8 /* Orthros___MacTests.m */; };
+		B92BB9D81B4B3A3C00B87CA8 /* liborthros.m in Sources */ = {isa = PBXBuildFile; fileRef = B97611BA1B478D6100971064 /* liborthros.m */; };
+		B92BB9DB1B4B3A3C00B87CA8 /* liborthros.h in Copy Files */ = {isa = PBXBuildFile; fileRef = B97611B81B478D6100971064 /* liborthros.h */; };
+		B92BB9E31B4B3ABC00B87CA8 /* liborthros_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B92BB9DF1B4B3A3C00B87CA8 /* liborthros_mac.a */; };
+		B94073CA1B5612A500D38EF6 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = B94073C91B5612A500D38EF6 /* RSA.m */; };
 		B951F4D01A9A672000FB4DBA /* KVNProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = B951F4CD1A9A672000FB4DBA /* KVNProgress.m */; };
 		B951F4D11A9A672000FB4DBA /* KVNProgressConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B951F4CF1A9A672000FB4DBA /* KVNProgressConfiguration.m */; };
 		B951F4D71A9A68A300FB4DBA /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B951F4D41A9A673600FB4DBA /* GLKit.framework */; };
@@ -22,10 +32,10 @@
 		B951F4E11A9A68F400FB4DBA /* UIImage+KVNImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = B951F4DF1A9A68F400FB4DBA /* UIImage+KVNImageEffects.m */; };
 		B96E132F1A9151640083B4EF /* UploadPubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B96E132E1A9151640083B4EF /* UploadPubTableViewController.m */; };
 		B96E13321A9153260083B4EF /* DeviceIdentifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = B96E13311A9153260083B4EF /* DeviceIdentifiers.m */; };
-		B97611B91B478D6100971064 /* liborthros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B97611B81B478D6100971064 /* liborthros.h */; };
+		B97611B91B478D6100971064 /* liborthros.h in Copy Files */ = {isa = PBXBuildFile; fileRef = B97611B81B478D6100971064 /* liborthros.h */; };
 		B97611BB1B478D6100971064 /* liborthros.m in Sources */ = {isa = PBXBuildFile; fileRef = B97611BA1B478D6100971064 /* liborthros.m */; };
-		B97611C11B478D6100971064 /* libliborthros.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B97611B61B478D6100971064 /* libliborthros.a */; };
-		B97611CF1B479F9500971064 /* libliborthros.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B97611B61B478D6100971064 /* libliborthros.a */; };
+		B97611C11B478D6100971064 /* libothros.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B97611B61B478D6100971064 /* libothros.a */; };
+		B97611CF1B479F9500971064 /* libothros.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B97611B61B478D6100971064 /* libothros.a */; };
 		B97708B91AD3549B0090E950 /* ConfigureTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B97708B81AD3549B0090E950 /* ConfigureTableViewController.m */; };
 		B97708BC1AD376F40090E950 /* ComposeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B97708BB1AD376F40090E950 /* ComposeTableViewController.m */; };
 		B97708BE1AD37AF70090E950 /* KVNProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B97708BD1AD37AF70090E950 /* KVNProgressView.xib */; };
@@ -68,6 +78,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B92BB9C61B4B39D900B87CA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9857A391A903F1F005FDB35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B92BB9AF1B4B39D800B87CA8;
+			remoteInfo = "Orthros - Mac";
+		};
+		B92BB9E01B4B3A5B00B87CA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9857A391A903F1F005FDB35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B92BB9D61B4B3A3C00B87CA8;
+			remoteInfo = "liborthros - Mac";
+		};
 		B97611C21B478D6100971064 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B9857A391A903F1F005FDB35 /* Project object */;
@@ -92,14 +116,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B97611B41B478D6100971064 /* CopyFiles */ = {
+		B92BB9DA1B4B3A3C00B87CA8 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				B97611B91B478D6100971064 /* liborthros.h in CopyFiles */,
+				B92BB9DB1B4B3A3C00B87CA8 /* liborthros.h in Copy Files */,
 			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B97611B41B478D6100971064 /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				B97611B91B478D6100971064 /* liborthros.h in Copy Files */,
+			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -116,6 +152,21 @@
 		B9075F2F1B0AD87A00F7B7D8 /* ScanQRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanQRViewController.h; sourceTree = "<group>"; };
 		B9075F301B0AD87A00F7B7D8 /* ScanQRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanQRViewController.m; sourceTree = "<group>"; };
 		B9075F321B0AD8B600F7B7D8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B92BB9B01B4B39D800B87CA8 /* Orthros - Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Orthros - Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B92BB9B31B4B39D900B87CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B92BB9B41B4B39D900B87CA8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B92BB9B51B4B39D900B87CA8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B92BB9B71B4B39D900B87CA8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B92BB9B91B4B39D900B87CA8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B92BB9BA1B4B39D900B87CA8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B92BB9BC1B4B39D900B87CA8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B92BB9BF1B4B39D900B87CA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B92BB9C51B4B39D900B87CA8 /* Orthros - MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Orthros - MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B92BB9CA1B4B39D900B87CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B92BB9CB1B4B39D900B87CA8 /* Orthros___MacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Orthros___MacTests.m"; sourceTree = "<group>"; };
+		B92BB9DF1B4B3A3C00B87CA8 /* liborthros_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liborthros_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B94073C81B5612A500D38EF6 /* RSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
+		B94073C91B5612A500D38EF6 /* RSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSA.m; sourceTree = "<group>"; };
 		B951F4CC1A9A672000FB4DBA /* KVNProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNProgress.h; sourceTree = "<group>"; };
 		B951F4CD1A9A672000FB4DBA /* KVNProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVNProgress.m; sourceTree = "<group>"; };
 		B951F4CE1A9A672000FB4DBA /* KVNProgressConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNProgressConfiguration.h; sourceTree = "<group>"; };
@@ -130,7 +181,7 @@
 		B96E132E1A9151640083B4EF /* UploadPubTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadPubTableViewController.m; sourceTree = "<group>"; };
 		B96E13301A9153260083B4EF /* DeviceIdentifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceIdentifiers.h; sourceTree = "<group>"; };
 		B96E13311A9153260083B4EF /* DeviceIdentifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceIdentifiers.m; sourceTree = "<group>"; };
-		B97611B61B478D6100971064 /* libliborthros.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliborthros.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B97611B61B478D6100971064 /* libothros.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libothros.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B97611B81B478D6100971064 /* liborthros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = liborthros.h; sourceTree = "<group>"; };
 		B97611BA1B478D6100971064 /* liborthros.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = liborthros.m; sourceTree = "<group>"; };
 		B97611C01B478D6100971064 /* liborthrosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = liborthrosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +269,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B92BB9AD1B4B39D800B87CA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B92BB9E31B4B3ABC00B87CA8 /* liborthros_mac.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B92BB9C21B4B39D900B87CA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B92BB9D91B4B3A3C00B87CA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B97611B31B478D6100971064 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,7 +302,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B97611C11B478D6100971064 /* libliborthros.a in Frameworks */,
+				B97611C11B478D6100971064 /* libothros.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +314,7 @@
 				B951F4D71A9A68A300FB4DBA /* GLKit.framework in Frameworks */,
 				B951F4D81A9A68A500FB4DBA /* QuartzCore.framework in Frameworks */,
 				B951F4DA1A9A68A900FB4DBA /* Security.framework in Frameworks */,
-				B97611CF1B479F9500971064 /* libliborthros.a in Frameworks */,
+				B97611CF1B479F9500971064 /* libothros.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +328,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B92BB9B11B4B39D900B87CA8 /* Orthros - Mac */ = {
+			isa = PBXGroup;
+			children = (
+				B92BB9B41B4B39D900B87CA8 /* AppDelegate.h */,
+				B92BB9B51B4B39D900B87CA8 /* AppDelegate.m */,
+				B92BB9B91B4B39D900B87CA8 /* ViewController.h */,
+				B92BB9BA1B4B39D900B87CA8 /* ViewController.m */,
+				B92BB9BC1B4B39D900B87CA8 /* Images.xcassets */,
+				B92BB9BE1B4B39D900B87CA8 /* Main.storyboard */,
+				B92BB9B21B4B39D900B87CA8 /* Supporting Files */,
+			);
+			path = "Orthros - Mac";
+			sourceTree = "<group>";
+		};
+		B92BB9B21B4B39D900B87CA8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B92BB9B31B4B39D900B87CA8 /* Info.plist */,
+				B92BB9B71B4B39D900B87CA8 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B92BB9C81B4B39D900B87CA8 /* Orthros - MacTests */ = {
+			isa = PBXGroup;
+			children = (
+				B92BB9CB1B4B39D900B87CA8 /* Orthros___MacTests.m */,
+				B92BB9C91B4B39D900B87CA8 /* Supporting Files */,
+			);
+			path = "Orthros - MacTests";
+			sourceTree = "<group>";
+		};
+		B92BB9C91B4B39D900B87CA8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B92BB9CA1B4B39D900B87CA8 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B951F4CB1A9A671200FB4DBA /* KVNProgress */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,6 +591,8 @@
 				B9857A5D1A903F1F005FDB35 /* bithashTests */,
 				B97611B71B478D6100971064 /* liborthros */,
 				B97611C41B478D6100971064 /* liborthrosTests */,
+				B92BB9B11B4B39D900B87CA8 /* Orthros - Mac */,
+				B92BB9C81B4B39D900B87CA8 /* Orthros - MacTests */,
 				B9857A421A903F1F005FDB35 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -487,8 +602,11 @@
 			children = (
 				B9857A411A903F1F005FDB35 /* Orthros.app */,
 				B9857A5A1A903F1F005FDB35 /* OrthrosTests.xctest */,
-				B97611B61B478D6100971064 /* libliborthros.a */,
+				B97611B61B478D6100971064 /* libothros.a */,
 				B97611C01B478D6100971064 /* liborthrosTests.xctest */,
+				B92BB9B01B4B39D800B87CA8 /* Orthros - Mac.app */,
+				B92BB9C51B4B39D900B87CA8 /* Orthros - MacTests.xctest */,
+				B92BB9DF1B4B3A3C00B87CA8 /* liborthros_mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -593,6 +711,8 @@
 				B96E13311A9153260083B4EF /* DeviceIdentifiers.m */,
 				B996C4C41AE3036900C376F6 /* UAObfuscatedString.h */,
 				B996C4C51AE3036900C376F6 /* UAObfuscatedString.m */,
+				B94073C81B5612A500D38EF6 /* RSA.h */,
+				B94073C91B5612A500D38EF6 /* RSA.m */,
 			);
 			name = Extentions;
 			path = Controllers;
@@ -655,13 +775,66 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B92BB9AF1B4B39D800B87CA8 /* Orthros - Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B92BB9CD1B4B39D900B87CA8 /* Build configuration list for PBXNativeTarget "Orthros - Mac" */;
+			buildPhases = (
+				B92BB9AC1B4B39D800B87CA8 /* Sources */,
+				B92BB9AD1B4B39D800B87CA8 /* Frameworks */,
+				B92BB9AE1B4B39D800B87CA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B92BB9E11B4B3A5B00B87CA8 /* PBXTargetDependency */,
+			);
+			name = "Orthros - Mac";
+			productName = "Orthros - Mac";
+			productReference = B92BB9B01B4B39D800B87CA8 /* Orthros - Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B92BB9C41B4B39D900B87CA8 /* Orthros - MacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B92BB9D01B4B39D900B87CA8 /* Build configuration list for PBXNativeTarget "Orthros - MacTests" */;
+			buildPhases = (
+				B92BB9C11B4B39D900B87CA8 /* Sources */,
+				B92BB9C21B4B39D900B87CA8 /* Frameworks */,
+				B92BB9C31B4B39D900B87CA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B92BB9C71B4B39D900B87CA8 /* PBXTargetDependency */,
+			);
+			name = "Orthros - MacTests";
+			productName = "Orthros - MacTests";
+			productReference = B92BB9C51B4B39D900B87CA8 /* Orthros - MacTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B92BB9D61B4B3A3C00B87CA8 /* liborthros - Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B92BB9DC1B4B3A3C00B87CA8 /* Build configuration list for PBXNativeTarget "liborthros - Mac" */;
+			buildPhases = (
+				B92BB9D71B4B3A3C00B87CA8 /* Sources */,
+				B92BB9D91B4B3A3C00B87CA8 /* Frameworks */,
+				B92BB9DA1B4B3A3C00B87CA8 /* Copy Files */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "liborthros - Mac";
+			productName = liborthros;
+			productReference = B92BB9DF1B4B3A3C00B87CA8 /* liborthros_mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		B97611B51B478D6100971064 /* liborthros */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B97611CB1B478D6100971064 /* Build configuration list for PBXNativeTarget "liborthros" */;
 			buildPhases = (
 				B97611B21B478D6100971064 /* Sources */,
 				B97611B31B478D6100971064 /* Frameworks */,
-				B97611B41B478D6100971064 /* CopyFiles */,
+				B97611B41B478D6100971064 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -669,7 +842,7 @@
 			);
 			name = liborthros;
 			productName = liborthros;
-			productReference = B97611B61B478D6100971064 /* libliborthros.a */;
+			productReference = B97611B61B478D6100971064 /* libothros.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		B97611BF1B478D6100971064 /* liborthrosTests */ = {
@@ -695,6 +868,7 @@
 			buildConfigurationList = B9857A641A903F1F005FDB35 /* Build configuration list for PBXNativeTarget "Orthros" */;
 			buildPhases = (
 				B9857A3D1A903F1F005FDB35 /* Sources */,
+				B9FC3B881B5633A5005220E3 /* ShellScript */,
 				B9857A3E1A903F1F005FDB35 /* Frameworks */,
 				B9857A3F1A903F1F005FDB35 /* Resources */,
 			);
@@ -735,6 +909,13 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Haifisch;
 				TargetAttributes = {
+					B92BB9AF1B4B39D800B87CA8 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					B92BB9C41B4B39D900B87CA8 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = B92BB9AF1B4B39D800B87CA8;
+					};
 					B97611B51B478D6100971064 = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -743,7 +924,7 @@
 					};
 					B9857A401A903F1F005FDB35 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 48E26FMAHC;
+						DevelopmentTeam = 7A8DWQ7DS7;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
 								enabled = 1;
@@ -773,11 +954,30 @@
 				B9857A591A903F1F005FDB35 /* OrthrosTests */,
 				B97611B51B478D6100971064 /* liborthros */,
 				B97611BF1B478D6100971064 /* liborthrosTests */,
+				B92BB9AF1B4B39D800B87CA8 /* Orthros - Mac */,
+				B92BB9C41B4B39D900B87CA8 /* Orthros - MacTests */,
+				B92BB9D61B4B3A3C00B87CA8 /* liborthros - Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B92BB9AE1B4B39D800B87CA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B92BB9BD1B4B39D900B87CA8 /* Images.xcassets in Resources */,
+				B92BB9C01B4B39D900B87CA8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B92BB9C31B4B39D900B87CA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B97611BE1B478D6100971064 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -805,7 +1005,49 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B9FC3B881B5633A5005220E3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		B92BB9AC1B4B39D800B87CA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B92BB9BB1B4B39D900B87CA8 /* ViewController.m in Sources */,
+				B92BB9B81B4B39D900B87CA8 /* main.m in Sources */,
+				B92BB9B61B4B39D900B87CA8 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B92BB9C11B4B39D900B87CA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B92BB9CC1B4B39D900B87CA8 /* Orthros___MacTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B92BB9D71B4B3A3C00B87CA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B92BB9D81B4B3A3C00B87CA8 /* liborthros.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B97611B21B478D6100971064 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -867,6 +1109,7 @@
 				B990AC2B1A9051C700E7EEBE /* JNKeychain.m in Sources */,
 				B98173461AD789970028ABC6 /* NSArray+BDJSONSerialization.m in Sources */,
 				B98173421AD789970028ABC6 /* BDSHA512Cryptor.m in Sources */,
+				B94073CA1B5612A500D38EF6 /* RSA.m in Sources */,
 				B990AC331A905E5F00E7EEBE /* bithashTableViewController.m in Sources */,
 				B9E00C711AF5CD3700CE042D /* LTHPasscodeViewController.m in Sources */,
 				B9075F2E1B0ACEDD00F7B7D8 /* MyQRViewController.m in Sources */,
@@ -884,6 +1127,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B92BB9C71B4B39D900B87CA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B92BB9AF1B4B39D800B87CA8 /* Orthros - Mac */;
+			targetProxy = B92BB9C61B4B39D900B87CA8 /* PBXContainerItemProxy */;
+		};
+		B92BB9E11B4B3A5B00B87CA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B92BB9D61B4B3A3C00B87CA8 /* liborthros - Mac */;
+			targetProxy = B92BB9E01B4B3A5B00B87CA8 /* PBXContainerItemProxy */;
+		};
 		B97611C31B478D6100971064 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B97611B51B478D6100971064 /* liborthros */;
@@ -902,6 +1155,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B92BB9BE1B4B39D900B87CA8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B92BB9BF1B4B39D900B87CA8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		B9857A4E1A903F1F005FDB35 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -923,6 +1184,119 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B92BB9CE1B4B39D900B87CA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Orthros - Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		B92BB9CF1B4B39D900B87CA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Orthros - Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		B92BB9D11B4B39D900B87CA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Orthros - MacTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orthros - Mac.app/Contents/MacOS/Orthros - Mac";
+			};
+			name = Debug;
+		};
+		B92BB9D21B4B39D900B87CA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Orthros - MacTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orthros - Mac.app/Contents/MacOS/Orthros - Mac";
+			};
+			name = Release;
+		};
+		B92BB9DD1B4B3A3C00B87CA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = orthros_mac;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B92BB9DE1B4B3A3C00B87CA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = orthros_mac;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		B97611C71B478D6100971064 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -934,7 +1308,8 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = othros;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -947,7 +1322,8 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = othros;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1088,6 +1464,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ninja.orthros.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Orthros;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1113,6 +1490,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ninja.orthros.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Orthros;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1149,6 +1527,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B92BB9CD1B4B39D900B87CA8 /* Build configuration list for PBXNativeTarget "Orthros - Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B92BB9CE1B4B39D900B87CA8 /* Debug */,
+				B92BB9CF1B4B39D900B87CA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B92BB9D01B4B39D900B87CA8 /* Build configuration list for PBXNativeTarget "Orthros - MacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B92BB9D11B4B39D900B87CA8 /* Debug */,
+				B92BB9D21B4B39D900B87CA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B92BB9DC1B4B3A3C00B87CA8 /* Build configuration list for PBXNativeTarget "liborthros - Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B92BB9DD1B4B3A3C00B87CA8 /* Debug */,
+				B92BB9DE1B4B3A3C00B87CA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B97611CB1B478D6100971064 /* Build configuration list for PBXNativeTarget "liborthros" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1156,6 +1561,7 @@
 				B97611C81B478D6100971064 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B97611CC1B478D6100971064 /* Build configuration list for PBXNativeTarget "liborthrosTests" */ = {
 			isa = XCConfigurationList;
@@ -1164,6 +1570,7 @@
 				B97611CA1B478D6100971064 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B9857A3C1A903F1F005FDB35 /* Build configuration list for PBXProject "Orthros" */ = {
 			isa = XCConfigurationList;

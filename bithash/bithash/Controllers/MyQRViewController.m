@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     identify = [[DeviceIdentifiers alloc] init];
+    self.title = @"My QR";
     CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
     [filter setDefaults];
     NSData *data = [[identify UUID] dataUsingEncoding:NSUTF8StringEncoding];

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ComposeTableViewController : UITableViewController
+@interface ComposeTableViewController : UITableViewController <UITextViewDelegate>
 @property (nonatomic, assign) BOOL isReply;
 @property (nonatomic, assign) BOOL fromContactsOrURL;
 @property (nonatomic, assign) NSString *reply_id;

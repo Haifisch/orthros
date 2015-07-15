@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface DeviceIdentifiers : NSObject
--(NSString*)UUID;
--(NSString *)createUUID;
+- (NSString*)UUID;
+- (NSString *)createUUID;
 @end

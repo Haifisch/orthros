@@ -8,9 +8,10 @@
 
 #import "ContactsTableViewController.h"
 #import "ComposeTableViewController.h"
-
+#import "DeviceIdentifiers.h"
 @interface ContactsTableViewController () {
     NSMutableArray *contactsArray;
+    DeviceIdentifiers *identify;
 }
 
 @end
@@ -20,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Contacts";
+    identify = [[DeviceIdentifiers alloc] init];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"contacts"]) {
         contactsArray = [[[NSUserDefaults standardUserDefaults] objectForKey:@"contacts"] mutableCopy];
     }
@@ -93,15 +95,45 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [contactsArray count];
+    if ([contactsArray count] > 0) {
+        return [contactsArray count];
+    }
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([contactsArray count] > 0) {
+        return 44;
+    }
+    return 90;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"contactCell"];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.detailTextLabel.text = [contactsArray[indexPath.row] allKeys][0]; // UUID
-    cell.textLabel.text = [contactsArray[indexPath.row] allValues][0]; // Name
-    return cell;
+    if ([contactsArray count] > 0) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"contactCell"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.detailTextLabel.text = [contactsArray[indexPath.row] allKeys][0]; // UUID
+        cell.textLabel.text = [contactsArray[indexPath.row] allValues][0]; // Name
+        return cell;
+    } else {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"noContacts"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        UILabel *noMsgs = [[UILabel alloc] initWithFrame:CGRectMake(0, cell.center.y-10, [UIScreen mainScreen].bounds.size.width, cell.frame.size.height)];
+        noMsgs.text = @"Your contacts are empty!";
+        noMsgs.textAlignment = NSTextAlignmentCenter;
+        noMsgs.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:25];
+        noMsgs.numberOfLines = 2;
+        [cell addSubview:noMsgs];
+        
+        UILabel *myID = [[UILabel alloc] initWithFrame:CGRectMake(0, cell.center.y+20, [UIScreen mainScreen].bounds.size.width, cell.frame.size.height)];
+        myID.text = [NSString stringWithFormat:@"Tap the \"plus\" sign to add a new contact."];
+        myID.textAlignment = NSTextAlignmentCenter;
+        myID.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
+        myID.adjustsFontSizeToFitWidth = YES;
+        myID.numberOfLines = 2;
+        [cell addSubview:myID];
+        return  cell;
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

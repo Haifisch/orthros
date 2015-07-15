@@ -35,7 +35,7 @@
     [super viewDidLoad];
     identify = [[DeviceIdentifiers alloc] init];
     orthros = [[liborthros alloc] initWithUUID:[identify UUID]];
-    if ((![JNKeychain loadValueForKey:PRIV_KEY] || ![JNKeychain loadValueForKey:PUB_KEY]) || UPLOAD_DEBUG || ![[NSUserDefaults standardUserDefaults] boolForKey:@"successfulSetup"]) {
+    if (![JNKeychain loadValueForKey:PRIV_KEY] || ![JNKeychain loadValueForKey:PUB_KEY] || UPLOAD_DEBUG || ![[NSUserDefaults standardUserDefaults] boolForKey:@"successfulSetup"]) {
         [self performSegueWithIdentifier:@"IntroductionView" sender:self];
     } else {
         [LTHPasscodeViewController sharedUser].delegate = self;

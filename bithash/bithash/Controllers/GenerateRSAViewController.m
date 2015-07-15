@@ -44,14 +44,24 @@
         UIAlertAction *destrutiveAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * __nonnull action) {
             BDError *error = [[BDError alloc] init];
             BDRSACryptor *RSACryptor = [[BDRSACryptor alloc] init];
-            
-            BDRSACryptorKeyPair *RSAKeyPair = [RSACryptor generateKeyPairWithKeyIdentifier:@"key_pair_tag"
-                                                                                     error:error];
-            [JNKeychain saveValue:RSAKeyPair.privateKey forKey:PRIV_KEY];
-            [JNKeychain saveValue:RSAKeyPair.publicKey forKey:PUB_KEY];
-            if ([self testEncryptDecryptWithRSACryptor:RSACryptor keyPair:RSAKeyPair error:error]) {
-                [self enableKeyCells:YES]; // keys were generated and stored.
-            }
+            __block BDRSACryptorKeyPair *RSAKeyPair;
+            [KVNProgress showProgress:0.0f
+                               status:@"Generating..."];
+            dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                RSAKeyPair = [RSACryptor generateKeyPairWithKeyIdentifier:@"key_pair_tag" error:error];
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    [JNKeychain saveValue:RSAKeyPair.privateKey forKey:PRIV_KEY];
+                    [JNKeychain saveValue:RSAKeyPair.publicKey forKey:PUB_KEY];
+                    [KVNProgress showProgress:0.9f
+                                       status:@"Generating..."];
+                    if (RSAKeyPair.privateKey != nil && RSAKeyPair.publicKey) {
+                        [KVNProgress showSuccessWithStatus:@"Success!"];
+                        [self enableKeyCells:YES]; // keys were generated and stored.
+                    } else {
+                        [KVNProgress showErrorWithStatus:@"Error generating keys!"];
+                    }
+                });
+            });
         }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction * __nonnull action) {
             // do nothing
@@ -62,26 +72,25 @@
     } else {
         BDError *error = [[BDError alloc] init];
         BDRSACryptor *RSACryptor = [[BDRSACryptor alloc] init];
-        
-        BDRSACryptorKeyPair *RSAKeyPair = [RSACryptor generateKeyPairWithKeyIdentifier:@"key_pair_tag"
-                                                                                 error:error];
-        [JNKeychain saveValue:RSAKeyPair.privateKey forKey:PRIV_KEY];
-        [JNKeychain saveValue:RSAKeyPair.publicKey forKey:PUB_KEY];
-        if ([self testEncryptDecryptWithRSACryptor:RSACryptor keyPair:RSAKeyPair error:error] == YES) {
-            [self enableKeyCells:YES]; // keys were generated and stored.
-        }
+        __block BDRSACryptorKeyPair *RSAKeyPair;
+        [KVNProgress showProgress:0.0f
+                           status:@"Generating..."];
+        dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            RSAKeyPair = [RSACryptor generateKeyPairWithKeyIdentifier:@"key_pair_tag" error:error];
+            dispatch_async( dispatch_get_main_queue(), ^{
+                [JNKeychain saveValue:RSAKeyPair.privateKey forKey:PRIV_KEY];
+                [JNKeychain saveValue:RSAKeyPair.publicKey forKey:PUB_KEY];
+                [KVNProgress showProgress:0.9f
+                                   status:@"Generating..."];
+                if (RSAKeyPair.privateKey != nil && RSAKeyPair.publicKey) {
+                    [KVNProgress showSuccessWithStatus:@"Success!"];
+                    [self enableKeyCells:YES]; // keys were generated and stored.
+                } else {
+                    [KVNProgress showErrorWithStatus:@"Error generating keys!"];
+                }
+            });
+        });
     }
-    
-}
-
--(BOOL)testEncryptDecryptWithRSACryptor:(BDRSACryptor *)RSACryptor keyPair:(BDRSACryptorKeyPair *)RSAKeyPair error:(BDError *)error {
-    NSString *originalText = [NSString stringWithUTF8String:"Test string encryption"];
-    NSString *cipherText = [RSACryptor encrypt:originalText key:RSAKeyPair.publicKey error:error];
-    NSString *recoveredText = [RSACryptor decrypt:cipherText key:RSAKeyPair.privateKey error:error];
-    if (!recoveredText) {
-        return NO;
-    }
-    return YES;
 }
 
 #pragma mark - Table view

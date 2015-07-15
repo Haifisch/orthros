@@ -10,14 +10,18 @@
 #import "DeviceIdentifiers.h"
 #import "JNKeychain.h"
 #import "Common.h"
+#import "BDRSACryptor.h"
+#import "KVNProgress.h"
 #import "LTHPasscodeViewController.h"
 @interface ConfigureTableViewController () <LTHPasscodeViewControllerDelegate> {
     DeviceIdentifiers *identify;
     BOOL isObliterating;
+    liborthros *orthros;
 }
 
 @property (strong, nonatomic) IBOutlet UISwitch *passSwitch;
 @property (strong, nonatomic) IBOutlet UILabel *uuidLabel;
+@property (strong, nonatomic) IBOutlet UILabel *buildLabel;
 @end
 
 @implementation ConfigureTableViewController
@@ -25,8 +29,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     identify = [[DeviceIdentifiers alloc] init];
+    orthros = [[liborthros alloc] initWithUUID:[identify UUID]];
     [self.uuidLabel setText:[identify UUID]];
     isObliterating = NO;
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
+    
+    NSString *build = infoDictionary[(NSString*)kCFBundleVersionKey];
+    self.buildLabel.text = [[NSString alloc] initWithFormat:@"#%@",build];
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -72,31 +82,45 @@
                                                                      withLogout:NO
                                                                  andLogoutTitle:nil];
         } else {
-            [JNKeychain deleteValueForKey:PRIV_KEY];
-            [JNKeychain deleteValueForKey:PUB_KEY];
-            [JNKeychain deleteValueForKey:BITHASH_ID];
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Keys obliterated! Kill and reopen Orthros to create a new account." message:nil preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil]];
-            [self presentViewController:alert animated:YES completion:nil];
+            [self runObliteration];
         }
 
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction * __nonnull action) {
-        // do nothing
+        isObliterating = NO;
     }];
     [warning addAction:cancelAction];
     [warning addAction:obliterateAction];
     [self presentViewController:warning animated:YES completion:nil];
 }
 
-- (void)passcodeWasEnteredSuccessfully {
-    if (isObliterating) {
+- (void)runObliteration {
+    BDRSACryptor *RSACryptor = [[BDRSACryptor alloc] init];
+    BDError *error;
+    NSString *enc_key = [orthros genNonce];
+    if (![orthros obliterate:[identify UUID] withKey:[RSACryptor decrypt:enc_key key:[JNKeychain loadValueForKey:PRIV_KEY] error:error]]) {
+        [KVNProgress showErrorWithStatus:@"Error'd out! Try again." completion:^{}];
+        isObliterating = NO;
+    }else {
+        [KVNProgress dismiss];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"pcb"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"successfulSetup"];
+        [LTHPasscodeViewController sharedUser].delegate = self;
+        [LTHPasscodeViewController sharedUser].maxNumberOfAllowedFailedAttempts = 3;
+        [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self
+                                                                                 asModal:YES];
         [JNKeychain deleteValueForKey:PRIV_KEY];
         [JNKeychain deleteValueForKey:PUB_KEY];
         [JNKeychain deleteValueForKey:BITHASH_ID];
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Keys obliterated! Kill and reopen Orthros to create a new account." message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Obliterate" message:@"Keys obliterated! Kill and reopen Orthros to create a new account." preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
+    }
+
+}
+- (void)passcodeWasEnteredSuccessfully {
+    if (isObliterating) {
+       [self runObliteration];
     }
 }
 

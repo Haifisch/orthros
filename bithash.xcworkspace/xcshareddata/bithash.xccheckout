@@ -12,20 +12,24 @@
 	<dict>
 		<key>048E95C44F42DBD9E26BF6018ECBFC738DFEFA39</key>
 		<string>https://github.com/Haifisch/orthros.git</string>
+		<key>3AD567A26F944B997A2284DC29BD1B703B49B5DA</key>
+		<string>https://github.com/Haifisch/orthros.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>bithash/bithash.xcworkspace</string>
+	<string>bithash.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>048E95C44F42DBD9E26BF6018ECBFC738DFEFA39</key>
 		<string>../..</string>
+		<key>3AD567A26F944B997A2284DC29BD1B703B49B5DA</key>
+		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/Haifisch/orthros.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>048E95C44F42DBD9E26BF6018ECBFC738DFEFA39</string>
+	<string>3AD567A26F944B997A2284DC29BD1B703B49B5DA</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -34,7 +38,15 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>048E95C44F42DBD9E26BF6018ECBFC738DFEFA39</string>
 			<key>IDESourceControlWCCName</key>
-			<string>orthros</string>
+			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3AD567A26F944B997A2284DC29BD1B703B49B5DA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>bithash</string>
 		</dict>
 	</array>
 </dict>

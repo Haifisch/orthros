@@ -10,6 +10,7 @@
 #define Orthros_Common_h
 #import "UAObfuscatedString.h"
 #import "liborthros.h"
+#import "KVNProgress.h"
 
 #define API_OB Obfuscate.f.r.r.n.q.colon.forward_slash.forward_slash.b.g.x.g.j.m.n.o.g.p.r.dot.m.t.r.f.t.m.q.dot.p.k.p.l.c
 #define PRIV_KEY Obfuscate.t.q.c.underscore.n.t.k.x.c.r.g.underscore.i.g.z

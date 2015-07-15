@@ -7,12 +7,16 @@
 //
 
 #import "liborthros.h"
-
+#warning I hate warnings, but remind me to change this back to NO.
+#define DEVELOPMENT YES
 @implementation liborthros
 
 #pragma mark orthros init
 
 - (id)initWithUUID:(NSString *)uuid {
+    if (DEVELOPMENT) {
+        return [self initWithAPIAddress:@"https://development.orthros.ninja" withUUID:uuid];
+    }
     return [self initWithAPIAddress:@"https://api.orthros.ninja" withUUID:uuid];
 }
 
@@ -174,7 +178,7 @@
 
 // Submit the user's public key to the server
 -(BOOL)upload:(NSString *)pub {
-    NSString *post = [NSString stringWithFormat:@"pub=%@",pub];
+    NSString *post = [NSString stringWithFormat:@"pub=%@",[self  base64String:pub]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
     NSString *action = @"upload";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?action=%@&UUID=%@", apiAddress, action, UUID]]];
@@ -188,7 +192,7 @@
             NSMutableDictionary *responseParsed = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
             if (error)
                 NSLog(@"liborthros; JSON parsing error: %@", error);
-            if ((int)responseParsed[@"error"] != 1) {
+            if ([responseParsed[@"error"] intValue] != 1) {
                 uploadResponse = YES;
             }else {
                 uploadResponse = NO;
@@ -202,27 +206,83 @@
     return uploadResponse;
 }
 
+// Obliterate a user
+- (BOOL)obliterate:(NSString *)uuid withKey:(NSString *)key {
+    NSString *post = [NSString stringWithFormat:@"key=%@", key];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    NSString *action = @"obliterate";
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?action=%@&UUID=%@", apiAddress, action, UUID]]];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = postData;
+    __block BOOL sendResponse;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSLog(@"Status code: %li", (long)((NSHTTPURLResponse *)response).statusCode);
+            NSMutableDictionary *parsedDict = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil] mutableCopy];
+            if ([parsedDict[@"error"] integerValue] == 1 || parsedDict == nil) {
+                sendResponse = NO;
+            }else {
+                sendResponse = YES;
+            }
+            
+        } else {
+            NSLog(@"liborthros; Error: %@", error.localizedDescription);
+        }
+        dispatch_semaphore_signal(semaphore);
+    }] resume];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return sendResponse;
+}
+
 // Download public key for user's ID
 -(NSString *)publicKeyFor:(NSString *)user_id {
-    NSString *returnedPub = [[NSString alloc] init];
     NSString *action = @"download";
     NSString *url = [NSString stringWithFormat:@"%@?action=%@&UUID=%@&receiver=%@", apiAddress, action, UUID, user_id];
     NSData *queryData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     if (queryData) {
         NSError *error;
         NSMutableDictionary *responseParsed = [NSJSONSerialization JSONObjectWithData:queryData options:NSJSONReadingMutableContainers error:&error];
-        // what the hell
-        // cut it up, fix it, put it back together. :) fuck this
-        returnedPub = [responseParsed[@"pub"] stringByReplacingOccurrencesOfString:@"-----BEGIN PUBLIC KEY-----" withString:@""];
-        returnedPub = [returnedPub stringByReplacingOccurrencesOfString:@"-----END PUBLIC KEY-----" withString:@""];
-        if (!returnedPub) {
-            return nil;
-        }
-        returnedPub = [returnedPub stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-        returnedPub = [NSString stringWithFormat:@"-----BEGIN PUBLIC KEY-----%@-----END PUBLIC KEY-----", returnedPub];
+        NSData *base64 = [[NSData alloc] initWithBase64EncodedString:responseParsed[@"pub"] options:0];
+        NSString *returnedPub = [[NSString alloc] initWithData:base64 encoding:NSUTF8StringEncoding];
         if (error)
             NSLog(@"liborthros; JSON parsing error: %@", error);
+        if (returnedPub)
+            return returnedPub;
     }
-    return returnedPub;
+    return nil;
+}
+
+- (NSString *)base64String:(NSString *)str
+{
+    NSData *theData = [str dataUsingEncoding: NSASCIIStringEncoding];
+    const uint8_t* input = (const uint8_t*)[theData bytes];
+    NSInteger length = [theData length];
+    
+    static char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    
+    NSMutableData* data = [NSMutableData dataWithLength:((length + 2) / 3) * 4];
+    uint8_t* output = (uint8_t*)data.mutableBytes;
+    
+    NSInteger i;
+    for (i=0; i < length; i += 3) {
+        NSInteger value = 0;
+        NSInteger j;
+        for (j = i; j < (i + 3); j++) {
+            value <<= 8;
+            
+            if (j < length) {
+                value |= (0xFF & input[j]);
+            }
+        }
+        
+        NSInteger theIndex = (i / 3) * 4;
+        output[theIndex + 0] =                    table[(value >> 18) & 0x3F];
+        output[theIndex + 1] =                    table[(value >> 12) & 0x3F];
+        output[theIndex + 2] = (i + 1) < length ? table[(value >> 6)  & 0x3F] : '=';
+        output[theIndex + 3] = (i + 2) < length ? table[(value >> 0)  & 0x3F] : '=';
+    }
+    
+    return [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 }
 @end

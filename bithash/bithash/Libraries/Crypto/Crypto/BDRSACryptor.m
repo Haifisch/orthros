@@ -69,7 +69,7 @@ static unsigned char oidSequence [] = { 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48
     
 //    BDDebugLog(@"Cipher buffer size: %lu", cipherBufferSize);
     
-    if (cipherBufferSize < sizeof(nonce))
+    if (cipherBufferSize < strlen((char *)nonce)+1)
     {
         if (publicKey)
         {
@@ -213,7 +213,8 @@ static unsigned char oidSequence [] = { 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48
     
     [self removeKey:privateKeyIdentifier
               error:error];
-    
+    [KVNProgress updateProgress:0.2f
+                       animated:YES];
     NSMutableDictionary *publicKeyAttributes = [NSMutableDictionary dictionary];
     [publicKeyAttributes setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecAttrIsPermanent];
     [publicKeyAttributes setObject:[publicKeyIdentifier dataUsingEncoding:NSUTF8StringEncoding] forKey:(__bridge id)kSecAttrApplicationTag];
@@ -224,10 +225,11 @@ static unsigned char oidSequence [] = { 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48
     
     NSMutableDictionary *keyPairAttributes = [NSMutableDictionary dictionary];
     [keyPairAttributes setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
-    [keyPairAttributes setObject:[NSNumber numberWithInt:1024] forKey:(__bridge id)kSecAttrKeySizeInBits];
+    [keyPairAttributes setObject:[NSNumber numberWithInt:3072] forKey:(__bridge id)kSecAttrKeySizeInBits];
     [keyPairAttributes setObject:privateKeyAttributes forKey:(__bridge id)kSecPrivateKeyAttrs];
     [keyPairAttributes setObject:publicKeyAttributes forKey:(__bridge id)kSecPublicKeyAttrs];
-    
+    [KVNProgress updateProgress:0.5f
+                       animated:YES];
     SecKeyRef publicKey = NULL;
     SecKeyRef privateKey = NULL;
     OSStatus err = SecKeyGeneratePair((__bridge CFDictionaryRef)keyPairAttributes, &publicKey, &privateKey);
@@ -249,12 +251,14 @@ static unsigned char oidSequence [] = { 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48
     {
         CFRelease(privateKey);
     }
-    
+    [KVNProgress updateProgress:0.6f
+                       animated:YES];
     BDRSACryptorKeyPair *result = [[BDRSACryptorKeyPair alloc] initWithPublicKey:[self X509FormattedPublicKey:publicKeyIdentifier
                                                                                                       error:error]
                                                                     privateKey:[self PEMFormattedPrivateKey:privateKeyIdentifier
                                                                                                       error:error]];
-    
+    [KVNProgress updateProgress:0.8f
+                       animated:YES];
     if (!result.publicKey || !result.privateKey)
     {
         return nil;

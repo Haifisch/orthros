@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Haifisch. All rights reserved.
 //
 
+#import <CommonCrypto/CommonDigest.h>
+
 #import "DeviceIdentifiers.h"
 #import "JNKeychain.h"
 
@@ -24,4 +26,5 @@
 {
     return [JNKeychain loadValueForKey:@"bithash_uuid"];
 }
+
 @end

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B97611B51B478D6100971064"
-               BuildableName = "libliborthros.a"
+               BuildableName = "libothros.a"
                BlueprintName = "liborthros"
                ReferencedContainer = "container:Orthros.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B97611B51B478D6100971064"
-            BuildableName = "libliborthros.a"
+            BuildableName = "libothros.a"
             BlueprintName = "liborthros"
             ReferencedContainer = "container:Orthros.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B97611B51B478D6100971064"
-            BuildableName = "libliborthros.a"
+            BuildableName = "libothros.a"
             BlueprintName = "liborthros"
             ReferencedContainer = "container:Orthros.xcodeproj">
          </BuildableReference>
@@ -94,7 +94,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B97611B51B478D6100971064"
-            BuildableName = "libliborthros.a"
+            BuildableName = "libothros.a"
             BlueprintName = "liborthros"
             ReferencedContainer = "container:Orthros.xcodeproj">
          </BuildableReference>

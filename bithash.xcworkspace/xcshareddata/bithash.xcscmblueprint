@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "3AD567A26F944B997A2284DC29BD1B703B49B5DA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "048E95C44F42DBD9E26BF6018ECBFC738DFEFA39" : 0,
+    "3AD567A26F944B997A2284DC29BD1B703B49B5DA" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5C441020-FF70-40E1-AD09-73867400F485",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "048E95C44F42DBD9E26BF6018ECBFC738DFEFA39" : "",
+    "3AD567A26F944B997A2284DC29BD1B703B49B5DA" : "bithash"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "bithash",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "bithash.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Haifisch\/orthros.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "048E95C44F42DBD9E26BF6018ECBFC738DFEFA39"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Haifisch\/orthros.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3AD567A26F944B997A2284DC29BD1B703B49B5DA"
+    }
+  ]
+}

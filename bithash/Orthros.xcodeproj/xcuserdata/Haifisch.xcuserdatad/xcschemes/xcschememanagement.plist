@@ -4,10 +4,20 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Orthros - Mac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>bithash.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>liborthros - Mac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>liborthros.xcscheme</key>
 		<dict>
@@ -17,6 +27,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>B92BB9AF1B4B39D800B87CA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B92BB9C41B4B39D900B87CA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B92BB9D61B4B3A3C00B87CA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B97611B51B478D6100971064</key>
 		<dict>
 			<key>primary</key>

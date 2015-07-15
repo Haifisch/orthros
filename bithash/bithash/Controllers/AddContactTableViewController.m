@@ -30,8 +30,6 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToContacts:)];
     [self.navigationItem setRightBarButtonItem:addButton];
     
-    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(cancel:)];
-    [self.navigationItem setLeftBarButtonItem:cancel];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -44,19 +42,20 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Looks like you've missed a field, check the fields and try again." preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
-    }
-    NSMutableArray *currentContacts = [[[NSUserDefaults standardUserDefaults] objectForKey:@"contacts"] mutableCopy];
-    if (!currentContacts) { // make a new one if it doesn't exist. 
-        currentContacts = [[NSMutableArray alloc] init];
-    }
-    [currentContacts addObject:[[NSDictionary alloc] initWithObjects:[[NSArray alloc] initWithObjects:self.contactName.text, nil] forKeys:[[NSArray alloc] initWithObjects:self.recievingID.text, nil]]];
-    [[NSUserDefaults standardUserDefaults] setObject:currentContacts forKey:@"contacts"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [KVNProgress showSuccessWithStatus:@"Added to contacts!" completion:^{
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-            [KVNProgress dismiss];
+    } else {
+        NSMutableArray *currentContacts = [[[NSUserDefaults standardUserDefaults] objectForKey:@"contacts"] mutableCopy];
+        if (!currentContacts) { // make a new one if it doesn't exist.
+            currentContacts = [[NSMutableArray alloc] init];
+        }
+        [currentContacts addObject:[[NSDictionary alloc] initWithObjects:[[NSArray alloc] initWithObjects:self.contactName.text, nil] forKeys:[[NSArray alloc] initWithObjects:self.recievingID.text, nil]]];
+        [[NSUserDefaults standardUserDefaults] setObject:currentContacts forKey:@"contacts"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [KVNProgress showSuccessWithStatus:@"Added to contacts!" completion:^{
+            [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                [KVNProgress dismiss];
+            }];
         }];
-    }];
+    }
 }
 
 - (void)updateID:(NSString*)new_id {
@@ -71,9 +70,6 @@
     }
 }
 
-- (IBAction)cancel:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

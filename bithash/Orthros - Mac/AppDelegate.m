@@ -15,6 +15,12 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
+        CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
+        
+        [[NSUserDefaults standardUserDefaults] setObject: (__bridge_transfer NSString *)uuidObject forKey:@"UUID"];
+        CFRelease(uuidObject);
+    }
     // Insert code here to initialize your application
 }
 

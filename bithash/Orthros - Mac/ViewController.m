@@ -7,12 +7,15 @@
 //
 
 #import "ViewController.h"
-
-@implementation ViewController
+#import "liborthros.h"
+@implementation ViewController {
+    liborthros *orthros;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    orthros = [[liborthros alloc] initWithUUID:[[NSUserDefaults standardUserDefaults] objectForKey:@"UUID"]];
+    
     // Do any additional setup after loading the view.
 }
 

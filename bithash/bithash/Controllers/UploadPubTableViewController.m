@@ -51,9 +51,11 @@
     if ([orthros check]) {
         [self updateStatusWithString:@"Keys exist, You're all set!"];
         [self updateCellsForNextStep:YES];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }else {
         [self updateStatusWithString:@"No keys exist, please upload them."];
         [self updateCellsForNextStep:NO];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
 }
 
@@ -61,10 +63,12 @@
     if ([orthros upload:[JNKeychain loadValueForKey:PUB_KEY]]) {
         [self updateStatusWithString:@"Public key uploaded!"];
         [self updateCellsForNextStep:YES];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"successfulSetup"];
     }else {
         [self updateStatusWithString:@"Failed to upload public key!"];
         [self updateCellsForNextStep:NO];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"successfulSetup"];
     }
 }
@@ -137,31 +141,6 @@
     }else if (indexPath.section == 1 && indexPath.row == 1) {
         [self performSegueWithIdentifier:@"SetupPasscode" sender:self];
     }
-}
-#pragma mark - NSURLConnection
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData*)data {
-    NSError *error;
-    NSMutableDictionary *responseParsed = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    if (error)
-        NSLog(@"JSON parsing error: %@", error);
-    if ((int)responseParsed[@"error"] != 1) {
-        [self updateStatusWithString:@"Public key uploaded!"];
-        [self updateCellsForNextStep:YES];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"successfulSetup"];
-    }else {
-        [self updateStatusWithString:@"Failed to upload public key!"];
-        [self updateCellsForNextStep:NO];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"successfulSetup"];
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"connectionFailed: %@", error.localizedDescription);
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 @end
