@@ -245,6 +245,12 @@
         NSMutableDictionary *responseParsed = [NSJSONSerialization JSONObjectWithData:queryData options:NSJSONReadingMutableContainers error:&error];
         NSData *base64 = [[NSData alloc] initWithBase64EncodedString:responseParsed[@"pub"] options:0];
         NSString *returnedPub = [[NSString alloc] initWithData:base64 encoding:NSUTF8StringEncoding];
+        // what the hell
+        // cut it up, fix it, put it back together. :) fuck this
+        returnedPub = [returnedPub stringByReplacingOccurrencesOfString:@"-----BEGIN PUBLIC KEY-----" withString:@""];
+        returnedPub = [returnedPub stringByReplacingOccurrencesOfString:@"-----END PUBLIC KEY-----" withString:@""];
+        returnedPub = [returnedPub stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        returnedPub = [NSString stringWithFormat:@"-----BEGIN PUBLIC KEY-----%@-----END PUBLIC KEY-----", returnedPub];
         if (error)
             NSLog(@"liborthros; JSON parsing error: %@", error);
         if (returnedPub)

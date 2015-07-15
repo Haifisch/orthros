@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UISwitch *passSwitch;
 @property (strong, nonatomic) IBOutlet UILabel *uuidLabel;
 @property (strong, nonatomic) IBOutlet UILabel *buildLabel;
+@property (strong, nonatomic) IBOutlet UITableViewCell *obliterateCell;
 @end
 
 @implementation ConfigureTableViewController
@@ -89,6 +90,8 @@
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction * __nonnull action) {
         isObliterating = NO;
     }];
+    warning.popoverPresentationController.sourceView = self.obliterateCell;
+    warning.popoverPresentationController.sourceRect = self.obliterateCell.bounds;
     [warning addAction:cancelAction];
     [warning addAction:obliterateAction];
     [self presentViewController:warning animated:YES completion:nil];
@@ -105,10 +108,11 @@
         [KVNProgress dismiss];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"pcb"];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"successfulSetup"];
-        [LTHPasscodeViewController sharedUser].delegate = self;
-        [LTHPasscodeViewController sharedUser].maxNumberOfAllowedFailedAttempts = 3;
-        [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self
-                                                                                 asModal:YES];
+        if ([LTHPasscodeViewController doesPasscodeExist] && [LTHPasscodeViewController didPasscodeTimerEnd]) {
+            [LTHPasscodeViewController sharedUser].delegate = self;
+            [LTHPasscodeViewController sharedUser].maxNumberOfAllowedFailedAttempts = 3;
+            [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self asModal:YES];
+        }
         [JNKeychain deleteValueForKey:PRIV_KEY];
         [JNKeychain deleteValueForKey:PUB_KEY];
         [JNKeychain deleteValueForKey:BITHASH_ID];

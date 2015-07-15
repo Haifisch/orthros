@@ -961,6 +961,7 @@ Q29weXJpZ2h0IAfCqSBIYWlmaXNjaCAyMDE1A
                     <navigationItem key="navigationItem" title="Configure" id="gHm-fD-sT4"/>
                     <connections>
                         <outlet property="buildLabel" destination="aBQ-b8-1ZS" id="Zpx-07-qMU"/>
+                        <outlet property="obliterateCell" destination="s70-YO-2Uc" id="Ihc-23-7mQ"/>
                         <outlet property="passSwitch" destination="sBI-Zs-5SY" id="0G4-Xy-MeO"/>
                         <outlet property="uuidLabel" destination="LNL-d3-vJq" id="g3r-dA-ArL"/>
                     </connections>

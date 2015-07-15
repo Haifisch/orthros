@@ -77,7 +77,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSIndexPath * indexPath = [self.tableView indexPathForCell:sender];
+    UITableViewCell *cell = (UITableViewCell*)sender;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if ([segue.identifier isEqualToString:@"messageFromContacts"]) {
         UINavigationController *nav = [segue destinationViewController];
         ComposeTableViewController *controller = (ComposeTableViewController *)nav.topViewController;
@@ -147,7 +148,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"messageFromContacts" sender:self];
+    [self performSegueWithIdentifier:@"messageFromContacts" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
 }
 
 @end
