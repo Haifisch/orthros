@@ -51,9 +51,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:currentContacts forKey:@"contacts"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [KVNProgress showSuccessWithStatus:@"Added to contacts!" completion:^{
-            [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                [KVNProgress dismiss];
-            }];
+            [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
         }];
     }
 }
