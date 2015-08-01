@@ -27,6 +27,7 @@
 {
     DeviceIdentifiers *identify;
     NSMutableArray *quedMessages;
+    NSMutableArray *plainTextMessages;
     liborthros *orthros;
     NSUserDefaults *defaults;
     NSDate *updatedEpoch;
@@ -111,8 +112,66 @@
 
 - (void)reloadMessages:(BOOL)quiet {
 
-    quedMessages = [[NSMutableArray alloc] init]; //empty/create new array for if one already exists.
     quedMessages = [orthros messagesInQueue];
+    plainTextMessages = [[NSMutableArray alloc] initWithCapacity:[quedMessages count]];
+    
+    //add all plain text messages to array
+    for (id msdID in quedMessages) {
+        [plainTextMessages addObject:[self readQued:(NSInteger *)[msdID integerValue]]];
+    }
+    
+    NSMutableArray *finalPlainMessages = [[NSMutableArray alloc] init];
+    
+    //cycle through all plain text messages and stitch grouped ones together
+    int cycle = (int)[plainTextMessages count] - 1;
+    while (cycle >= 0) {
+        
+        NSString *message = plainTextMessages[cycle];
+
+        //detirmine if it needs to be grouped
+        if ([message length] >= 350 && [[message substringWithRange:NSMakeRange([message length] - 3, 1)] isEqualToString:@";"]) {
+            
+            //message is part of a series of messages, start piecing them together
+            NSMutableString *longMessage = [[NSMutableString alloc] init];;//WithString:[message substringToIndex:348]];
+            
+            NSInteger remaining = [[NSString stringWithFormat:@"%@", [message substringWithRange:NSMakeRange([message length] - 2, 1)]] integerValue];
+            
+            int nextCount = -1;
+            while (remaining > 0) {
+                
+                nextCount++;
+                NSString *nextMessage = plainTextMessages[[plainTextMessages indexOfObject:message] - nextCount];
+                
+                remaining = [[NSString stringWithFormat:@"%@", [nextMessage substringWithRange:NSMakeRange([nextMessage length] - 2, 1)]] integerValue];
+                
+                nextMessage = [nextMessage substringToIndex:[nextMessage length] - 3];
+                [longMessage appendString:nextMessage];
+                
+                cycle--;
+                
+            }
+
+            [finalPlainMessages addObject:longMessage];
+            
+        }
+        else {
+            
+            [finalPlainMessages addObject:message];
+            cycle--;
+
+        }
+        
+
+    }
+    
+    //add texts back in, revered
+    [plainTextMessages removeAllObjects];
+    int ccount = (int)[finalPlainMessages count] - 1;
+    while (ccount >= 0) {
+        [plainTextMessages addObject:finalPlainMessages[ccount]];
+        ccount--;
+    }
+    
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
 }
@@ -207,20 +266,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    if ([quedMessages count] > 0) {
-        return [quedMessages count];
+    if ([plainTextMessages count] > 0) {
+        return [plainTextMessages count];
     }else {
         return 1;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([quedMessages count] > 0) {
+    if ([plainTextMessages count] > 0) {
         return 44;
     }
     return 65;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([quedMessages count] > 0) {
+    if ([plainTextMessages count] > 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"msgCell" forIndexPath:indexPath];
         cell.backgroundColor = [UIColor colorWithRed:72/255.0f green:72/255.0f blue:72/255.0f alpha:1];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -269,7 +328,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([quedMessages count] > 0) {
+    if ([plainTextMessages count] > 0) {
         return YES;
     }
     return NO;
@@ -287,7 +346,7 @@
     if ([segue.identifier isEqualToString:@"viewMessage"]) {
         MessageDetailTableViewController *controller = (MessageDetailTableViewController *)segue.destinationViewController;
         controller.sender = [orthros senderForMessageID:(NSInteger *)[quedMessages[indexPath.row] integerValue]];
-        controller.message = [self readQued:(NSInteger *)[quedMessages[indexPath.row] integerValue]];
+        controller.message = plainTextMessages[indexPath.row];
         controller.msg_id = (NSInteger *)[quedMessages[indexPath.row] integerValue];
     } else if ([segue.identifier isEqualToString:@"urlSegue"]){
         ComposeTableViewController *controller = (ComposeTableViewController *)[segue destinationViewController];

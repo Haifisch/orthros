@@ -64,7 +64,34 @@
 }
 - (IBAction)attemptSending:(id)sender {
     if ([self.messageBox.text length] > 0 && [self.recievingIDBox.text length] > 0) {
-        [self sendMessage:self.messageBox.text withUUID:self.recievingIDBox.text];
+        
+        NSString *message = [_messageBox text];
+        if ([message length] > 350) {
+            
+            //if string is > 350 chars, break it up and send it in parts
+            int messageCount = ceil((double)[[_messageBox text] length] / 348);
+            for (int msgSent = 0; msgSent < messageCount; msgSent++) {
+                
+                NSString *currentMsg;
+                if ((msgSent * 350) + 348 > [message length]) {
+                    
+                    currentMsg = [message substringFromIndex:msgSent * 349];
+                }
+                else {
+                    
+                    currentMsg = [message substringWithRange:NSMakeRange(msgSent * 350, 348)];
+                }
+                
+                currentMsg = [currentMsg stringByAppendingString:[NSString stringWithFormat:@";%d", messageCount - (msgSent + 1)]];
+                [self sendMessage:currentMsg withUUID:[_recievingIDBox text]];
+            }
+            
+        }
+        else {
+        
+            [self sendMessage:self.messageBox.text withUUID:self.recievingIDBox.text];
+        }
+        
     } else if ([self isUUID:self.recievingIDBox.text]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"ID is invalid" message:@"Make sure the ID is valid before sending" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
@@ -124,15 +151,6 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    NSInteger textlength = [textView.text length] - range.length + [text length];
-    if (textlength > 350) {
-        return NO;
-    }
-    self.counterLabel.text = [NSString stringWithFormat:@"%li/350", (long)textlength];
-    return YES;
 }
 
 /* NEED SSL ON SERVER FIRST
