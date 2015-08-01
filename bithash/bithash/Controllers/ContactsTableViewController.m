@@ -9,9 +9,11 @@
 #import "ContactsTableViewController.h"
 #import "ComposeTableViewController.h"
 #import "DeviceIdentifiers.h"
+#import "Common.h"
 @interface ContactsTableViewController () {
     NSMutableArray *contactsArray;
     DeviceIdentifiers *identify;
+    NSUserDefaults *defaults;
 }
 
 @end
@@ -20,17 +22,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ninja.orthros.group.suite"];
     self.title = @"Contacts";
+    
+    self.tableView.backgroundColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
+    [self.tableView setSeparatorColor:[UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1]];
+    
     identify = [[DeviceIdentifiers alloc] init];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"contacts"]) {
-        contactsArray = [[[NSUserDefaults standardUserDefaults] objectForKey:@"contacts"] mutableCopy];
+    if ([defaults objectForKey:@"contacts"]) {
+        contactsArray = [[defaults objectForKey:@"contacts"] mutableCopy];
     }
     UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(preformAddSegue:)];
-    [add setTintColor:[UIColor purpleColor]];
+    [add setTintColor:orthros_purple];
     [self.navigationItem setRightBarButtonItem:add];
     
     UIBarButtonItem *myQR = [[UIBarButtonItem alloc] initWithTitle:@"My QR" style:UIBarButtonItemStylePlain target:self action:@selector(viewMyQR:)];
-    [myQR setTintColor:[UIColor purpleColor]];
+    [myQR setTintColor:orthros_purple];
     [self.navigationItem setLeftBarButtonItem:myQR];
     
     
@@ -60,7 +67,7 @@
 }
 
 - (void)updateTable {
-    contactsArray = [[[NSUserDefaults standardUserDefaults] objectForKey:@"contacts"] mutableCopy];
+    contactsArray = [[defaults objectForKey:@"contacts"] mutableCopy];
     [self.tableView reloadData];
 }
 
@@ -68,8 +75,8 @@
     for (int count = 0; count < contactsArray.count; count++) {
         if ([[[contactsArray[count] allKeys] objectAtIndex:0] isEqualToString:user_id]) {
             [contactsArray removeObject:contactsArray[count]];
-            [[NSUserDefaults standardUserDefaults] setObject:contactsArray forKey:@"contacts"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [defaults setObject:contactsArray forKey:@"contacts"];
+            [defaults synchronize];
         }
     }
     [self updateTable];
@@ -80,8 +87,7 @@
     UITableViewCell *cell = (UITableViewCell*)sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if ([segue.identifier isEqualToString:@"messageFromContacts"]) {
-        UINavigationController *nav = [segue destinationViewController];
-        ComposeTableViewController *controller = (ComposeTableViewController *)nav.topViewController;
+        ComposeTableViewController *controller = (ComposeTableViewController *)[segue destinationViewController];
         controller.fromContactsOrURL = YES;
         controller.reply_id = [[contactsArray[indexPath.row] allKeys] objectAtIndex:0];
     }
@@ -114,31 +120,43 @@
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"contactCell"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = [contactsArray[indexPath.row] allKeys][0]; // UUID
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
         cell.textLabel.text = [contactsArray[indexPath.row] allValues][0]; // Name
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor colorWithRed:72/255.0f green:72/255.0f blue:72/255.0f alpha:1];
+        tableView.separatorColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
         return cell;
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"noContacts"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
         UILabel *noMsgs = [[UILabel alloc] initWithFrame:CGRectMake(0, cell.center.y-10, [UIScreen mainScreen].bounds.size.width, cell.frame.size.height)];
         noMsgs.text = @"Your contacts are empty!";
         noMsgs.textAlignment = NSTextAlignmentCenter;
+        noMsgs.textColor = [UIColor whiteColor];
         noMsgs.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:25];
         noMsgs.numberOfLines = 2;
+        noMsgs.backgroundColor = [UIColor clearColor];
         [cell addSubview:noMsgs];
         
         UILabel *myID = [[UILabel alloc] initWithFrame:CGRectMake(0, cell.center.y+20, [UIScreen mainScreen].bounds.size.width, cell.frame.size.height)];
         myID.text = [NSString stringWithFormat:@"Tap the \"plus\" sign to add a new contact."];
         myID.textAlignment = NSTextAlignmentCenter;
+        myID.textColor = [UIColor whiteColor];
         myID.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
         myID.adjustsFontSizeToFitWidth = YES;
         myID.numberOfLines = 2;
         [cell addSubview:myID];
+        tableView.separatorColor = [UIColor clearColor];
         return  cell;
     }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    if ([contactsArray count] > 0) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -148,7 +166,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"messageFromContacts" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+    if ([contactsArray count] > 0) {
+        [self performSegueWithIdentifier:@"messageFromContacts" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+    }
 }
 
 @end

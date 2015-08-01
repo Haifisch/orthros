@@ -8,6 +8,7 @@
 
 #import "GenerateRSAViewController.h"
 #import "Common.h"
+#import "DeviceIdentifiers.h"
 
 #define HEADER_HEIGHT 120
 
@@ -19,11 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"Generate RSA Keys"];
+    self.tableView.backgroundColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
+    [self.tableView setSeparatorColor:[UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1]];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     if ([JNKeychain loadValueForKey:PRIV_KEY] || [JNKeychain loadValueForKey:PUB_KEY]) {
         [self enableKeyCells:YES];
     }else {
@@ -34,6 +36,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [cell setBackgroundColor:[UIColor colorWithRed:72/255.0f green:72/255.0f blue:72/255.0f alpha:1]];
 }
 
 - (void)generateKeys
@@ -47,13 +53,15 @@
             __block BDRSACryptorKeyPair *RSAKeyPair;
             [KVNProgress showProgress:0.0f
                                status:@"Generating..."];
+            DeviceIdentifiers *identify = [[DeviceIdentifiers alloc] init];
             dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                RSAKeyPair = [RSACryptor generateKeyPairWithKeyIdentifier:@"key_pair_tag" error:error];
+                RSAKeyPair = [RSACryptor generateKeyPairWithKeyIdentifier:@"orthros_pair_popped" error:error];
                 dispatch_async( dispatch_get_main_queue(), ^{
                     [JNKeychain saveValue:RSAKeyPair.privateKey forKey:PRIV_KEY];
                     [JNKeychain saveValue:RSAKeyPair.publicKey forKey:PUB_KEY];
                     [KVNProgress showProgress:0.9f
                                        status:@"Generating..."];
+                    [identify createUUID];
                     if (RSAKeyPair.privateKey != nil && RSAKeyPair.publicKey) {
                         [KVNProgress showSuccessWithStatus:@"Success!"];
                         [self enableKeyCells:YES]; // keys were generated and stored.
@@ -75,8 +83,10 @@
         __block BDRSACryptorKeyPair *RSAKeyPair;
         [KVNProgress showProgress:0.0f
                            status:@"Generating..."];
+        DeviceIdentifiers *identify = [[DeviceIdentifiers alloc] init];
+        [identify createUUID];
         dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            RSAKeyPair = [RSACryptor generateKeyPairWithKeyIdentifier:@"key_pair_tag" error:error];
+            RSAKeyPair = [RSACryptor generateKeyPairWithKeyIdentifier:@"orthros_pair_popped" error:error];
             dispatch_async( dispatch_get_main_queue(), ^{
                 [JNKeychain saveValue:RSAKeyPair.privateKey forKey:PRIV_KEY];
                 [JNKeychain saveValue:RSAKeyPair.publicKey forKey:PUB_KEY];
@@ -125,6 +135,7 @@
         rsaLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         rsaLabel.text = @"This is where we will generate our RSA keys, both a public key and a private key. The public key is shared and stored on our servers for peer download use to encrypt messages so that only you can decrypt with your private key, the private key is stored in the iOS keychain, which is then encrypted with your phone's passcode using AES as the cryptography engine."; // we should have this localized.
         rsaLabel.adjustsFontSizeToFitWidth = YES;
+        rsaLabel.textColor = [UIColor whiteColor];
         [rsaLabel setNumberOfLines:6];
         rsaLabel.textAlignment = NSTextAlignmentCenter;
         [headerView addSubview:rsaLabel];

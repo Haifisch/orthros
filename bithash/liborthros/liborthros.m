@@ -1,4 +1,4 @@
-//
+ //
 //  liborthros.m
 //  liborthros
 //
@@ -9,7 +9,10 @@
 #import "liborthros.h"
 #warning I hate warnings, but remind me to change this back to NO.
 #define DEVELOPMENT YES
-@implementation liborthros
+@implementation liborthros {
+    NSURL *apiAddress;
+    NSString *UUID;
+}
 
 #pragma mark orthros init
 
@@ -29,10 +32,17 @@
     return self;
 }
 
+- (void)setAPIAdress:(NSString *)newAPIURL {
+    apiAddress = [NSURL URLWithString:newAPIURL];
+}
+
+- (void)setOrthrosID:(NSString *)orthros_id {
+    UUID = orthros_id;
+}
 #pragma mark orthos message functions
 
 // Read message for ID, response is encrypted.
-- (NSString *)read:(NSInteger *)msg_id {
+- (NSString *)readMessageWithID:(NSInteger *)msg_id {
     NSString *action = @"get";
     NSString *urlString = [NSString stringWithFormat:@"%@?action=%@&msg_id=%ld&UUID=%@", apiAddress, action, (long)msg_id, UUID];
     NSData *queryData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
@@ -48,7 +58,7 @@
 }
 
 // Get sender for message ID
-- (NSString *)sender:(NSInteger *)msg_id {
+- (NSString *)senderForMessageID:(NSInteger *)msg_id {
     NSString *action = @"get";
     NSString *urlString = [NSString stringWithFormat:@"%@?action=%@&msg_id=%ld&UUID=%@", apiAddress, action, (long)msg_id, UUID];
     NSData *queryData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
@@ -79,7 +89,7 @@
 }
 
 // Delete message for ID, returns YES for a sucessful deletion or NO for unsucessful
-- (BOOL)delete:(NSInteger *)msg_id withKey:(NSString *)key {
+- (BOOL)deleteMessageWithID:(NSInteger *)msg_id withKey:(NSString *)key {
     NSString *action = @"delete_msg";
     NSString *post = [NSString stringWithFormat:@"key=%@",key];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -107,7 +117,7 @@
 }
 
 // Send encrypted message to a user's ID
-- (BOOL)send:(NSString *)crypted_message toUser:(NSString *)to_id withKey:(NSString *)key {
+- (BOOL)sendMessage:(NSString *)crypted_message toUser:(NSString *)to_id withKey:(NSString *)key {
     NSDictionary* jsonDict = @{@"sender":UUID,@"msg":crypted_message};
     NSData* json = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:nil];
     NSString *jsonStr = [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
@@ -141,7 +151,7 @@
 #pragma mark nonce managment
 
 // Get onetime key
--(NSString *)genNonce {
+- (NSString *)genNonce {
     NSString *returnedKey = [[NSString alloc] init];
     NSString *action = @"gen_key";
     NSString *url = [NSString stringWithFormat:@"%@?action=%@&UUID=%@", apiAddress, action, UUID];
@@ -158,7 +168,7 @@
 #pragma mark General UUID queries
 
 // Check if UUID exists
--(BOOL)check {
+- (BOOL)checkForUUID {
     NSString *action = @"check";
     NSString *url = [NSString stringWithFormat:@"%@?action=%@&UUID=%@", apiAddress, action, UUID];
     NSData *queryData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
@@ -176,9 +186,28 @@
     return NO;
 }
 
+// Get date of creation for local user's public key
+- (NSDate *)userPublicKeyLifetime {
+    NSString *action = @"keypair_epoch";
+    NSString *url = [NSString stringWithFormat:@"%@?action=%@&UUID=%@", apiAddress, action, UUID];
+    NSData *queryData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+    if (queryData) {
+        NSError *error;
+        NSMutableDictionary *responseParsed = [NSJSONSerialization JSONObjectWithData:queryData options:NSJSONReadingMutableContainers error:&error];
+        if (error)
+            NSLog(@"liborthros; JSON parsing error: %@", error);
+        if ([responseParsed[@"error"] intValue] != 1) {
+            return [NSDate dateWithTimeIntervalSince1970:[responseParsed[@"result"] doubleValue]];
+        }else {
+            return nil;
+        }
+    }
+    return nil;
+}
+
 // Submit the user's public key to the server
--(BOOL)upload:(NSString *)pub {
-    NSString *post = [NSString stringWithFormat:@"pub=%@",[self  base64String:pub]];
+- (BOOL)uploadPublicKey:(NSString *)pub {
+    NSString *post = [NSString stringWithFormat:@"pub=%@", [self base64String:pub]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
     NSString *action = @"upload";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?action=%@&UUID=%@", apiAddress, action, UUID]]];
@@ -206,8 +235,68 @@
     return uploadResponse;
 }
 
+// Submit new public key for replacement on the server
+- (BOOL)submitNewPublicKey:(NSString *)pub withKey:(NSString *)nonce {
+    NSString *post = [NSString stringWithFormat:@"key=%@&pub=%@", nonce, [self base64String:pub]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    NSString *action = @"keypair_replace";
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?action=%@&UUID=%@", apiAddress, action, UUID]]];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = postData;
+    __block BOOL uploadResponse;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSError *error;
+            NSMutableDictionary *responseParsed = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+            if (error)
+                NSLog(@"liborthros; JSON parsing error: %@", error);
+            if ([responseParsed[@"error"] intValue] != 1) {
+                uploadResponse = YES;
+            }else {
+                uploadResponse = NO;
+            }
+        } else {
+            uploadResponse = NO;
+        }
+        dispatch_semaphore_signal(semaphore);
+    }] resume];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return uploadResponse;
+}
+
+// Submit the user's device token to the server
+-(BOOL)submitToken:(NSString *)device_token {
+    NSString *post = [NSString stringWithFormat:@"token=%@",device_token];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    NSString *action = @"submit_token";
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?action=%@&UUID=%@", apiAddress, action, UUID]]];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = postData;
+    __block BOOL uploadResponse;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSError *error;
+            NSMutableDictionary *responseParsed = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+            if (error)
+                NSLog(@"liborthros; JSON parsing error: %@", error);
+            if ([responseParsed[@"error"] intValue] != 1) {
+                uploadResponse = YES;
+            }else {
+                uploadResponse = NO;
+            }
+        } else {
+            uploadResponse = NO;
+        }
+        dispatch_semaphore_signal(semaphore);
+    }] resume];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return uploadResponse;
+}
+
 // Obliterate a user
-- (BOOL)obliterate:(NSString *)uuid withKey:(NSString *)key {
+- (BOOL)obliterateWithKey:(NSString *)key {
     NSString *post = [NSString stringWithFormat:@"key=%@", key];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
     NSString *action = @"obliterate";
@@ -231,12 +320,12 @@
         }
         dispatch_semaphore_signal(semaphore);
     }] resume];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER); 
     return sendResponse;
 }
 
 // Download public key for user's ID
--(NSString *)publicKeyFor:(NSString *)user_id {
+-(NSString *)publicKeyForUserID:(NSString *)user_id {
     NSString *action = @"download";
     NSString *url = [NSString stringWithFormat:@"%@?action=%@&UUID=%@&receiver=%@", apiAddress, action, UUID, user_id];
     NSData *queryData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
@@ -259,6 +348,7 @@
     return nil;
 }
 
+// Local base64 string function
 - (NSString *)base64String:(NSString *)str
 {
     NSData *theData = [str dataUsingEncoding: NSASCIIStringEncoding];
@@ -291,4 +381,5 @@
     
     return [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 }
+
 @end

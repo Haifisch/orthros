@@ -8,17 +8,20 @@
 
 #import "AppDelegate.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+    NSUserDefaults *defaults;
+}
 
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
+    defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ninja.orthros.group.suite"];
+    if (![defaults boolForKey:@"firstLaunch"]) {
         CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
         
-        [[NSUserDefaults standardUserDefaults] setObject: (__bridge_transfer NSString *)uuidObject forKey:@"UUID"];
+        [defaults setObject: (__bridge_transfer NSString *)uuidObject forKey:@"UUID"];
         CFRelease(uuidObject);
     }
     // Insert code here to initialize your application

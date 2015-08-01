@@ -21,6 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Passcode";
+    self.tableView.backgroundColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
+    [self.tableView setSeparatorColor:[UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1]];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -60,7 +62,7 @@
         UILabel *passLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, headerView.bounds.size.width - 20, headerView.bounds.size.height)];
         passLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         passLabel.text = @"Setting a passcode is highly suggested, by setting one you're adding another layer of security to Orthros and allows protection to accessing the application. If you have a device with Touch ID, setting a passcode will allow you to unlock Orthros with your finger! If you wish to skip this step, just press finish."; // we should have this localized.
-        //
+        passLabel.textColor = [UIColor whiteColor];
         passLabel.adjustsFontSizeToFitWidth = YES;
         [passLabel setNumberOfLines:6];
         passLabel.textAlignment = NSTextAlignmentCenter;

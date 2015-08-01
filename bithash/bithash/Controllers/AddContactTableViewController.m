@@ -9,7 +9,9 @@
 #import "AddContactTableViewController.h"
 #import "KVNProgress.h"
 #import "ScanQRViewController.h"
-@interface AddContactTableViewController () <AddContactDelegate>
+@interface AddContactTableViewController () <AddContactDelegate> {
+    NSUserDefaults *defaults;
+}
 @property (strong, nonatomic) IBOutlet UITextField *recievingID;
 @property (strong, nonatomic) IBOutlet UITextField *contactName;
 @end
@@ -18,7 +20,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ninja.orthros.group.suite"];
+    self.tableView.backgroundColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
+    [self.tableView setSeparatorColor:[UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1]];
+    self.recievingID.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Orthros ID" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    self.contactName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Contact Name" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+
     if (self.isFromMessage) {
         [self.recievingID setEnabled:NO];
         [self.recievingID setText:self.recieving_id];
@@ -43,15 +50,15 @@
         [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
-        NSMutableArray *currentContacts = [[[NSUserDefaults standardUserDefaults] objectForKey:@"contacts"] mutableCopy];
+        NSMutableArray *currentContacts = [[defaults objectForKey:@"contacts"] mutableCopy];
         if (!currentContacts) { // make a new one if it doesn't exist.
             currentContacts = [[NSMutableArray alloc] init];
         }
         [currentContacts addObject:[[NSDictionary alloc] initWithObjects:[[NSArray alloc] initWithObjects:self.contactName.text, nil] forKeys:[[NSArray alloc] initWithObjects:self.recievingID.text, nil]]];
-        [[NSUserDefaults standardUserDefaults] setObject:currentContacts forKey:@"contacts"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [defaults setObject:currentContacts forKey:@"contacts"];
+        [defaults synchronize];
         [KVNProgress showSuccessWithStatus:@"Added to contacts!" completion:^{
-            [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }];
     }
 }

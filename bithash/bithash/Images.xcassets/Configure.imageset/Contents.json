@@ -2,18 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "1430649013_gear-48.png"
+      "filename" : "1437557135_settings.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "1430649018_gear-64.png"
+      "filename" : "1437556534_settings.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "1430649022_gear-128.png"
+      "filename" : "1437556537_settings.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

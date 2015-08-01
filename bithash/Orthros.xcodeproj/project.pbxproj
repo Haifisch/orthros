@@ -22,7 +22,6 @@
 		B92BB9D81B4B3A3C00B87CA8 /* liborthros.m in Sources */ = {isa = PBXBuildFile; fileRef = B97611BA1B478D6100971064 /* liborthros.m */; };
 		B92BB9DB1B4B3A3C00B87CA8 /* liborthros.h in Copy Files */ = {isa = PBXBuildFile; fileRef = B97611B81B478D6100971064 /* liborthros.h */; };
 		B92BB9E31B4B3ABC00B87CA8 /* liborthros_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B92BB9DF1B4B3A3C00B87CA8 /* liborthros_mac.a */; };
-		B94073CA1B5612A500D38EF6 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = B94073C91B5612A500D38EF6 /* RSA.m */; };
 		B951F4D01A9A672000FB4DBA /* KVNProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = B951F4CD1A9A672000FB4DBA /* KVNProgress.m */; };
 		B951F4D11A9A672000FB4DBA /* KVNProgressConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B951F4CF1A9A672000FB4DBA /* KVNProgressConfiguration.m */; };
 		B951F4D71A9A68A300FB4DBA /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B951F4D41A9A673600FB4DBA /* GLKit.framework */; };
@@ -75,6 +74,10 @@
 		B9DD4A8D1ADE2129000F2D97 /* AddContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9DD4A8C1ADE2129000F2D97 /* AddContactTableViewController.m */; };
 		B9E00C701AF5CD3700CE042D /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E00C6D1AF5CD3700CE042D /* LTHKeychainUtils.m */; };
 		B9E00C711AF5CD3700CE042D /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E00C6F1AF5CD3700CE042D /* LTHPasscodeViewController.m */; };
+		B9E7DE2E1B61663700F463A7 /* CreditsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E7DE2D1B61663700F463A7 /* CreditsTableViewController.m */; };
+		B9F1F24D1B6C816200C564D4 /* SupportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9F1F24C1B6C816200C564D4 /* SupportTableViewController.m */; };
+		B9F1F24F1B6CABFF00C564D4 /* liborthros.m in Sources */ = {isa = PBXBuildFile; fileRef = B97611BA1B478D6100971064 /* liborthros.m */; };
+		B9F7E45E1B6895EA00EDD63D /* APISettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9F7E45D1B6895EA00EDD63D /* APISettingsTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +141,16 @@
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9F7E4871B69C2AD00EDD63D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -165,8 +178,6 @@
 		B92BB9CA1B4B39D900B87CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B92BB9CB1B4B39D900B87CA8 /* Orthros___MacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Orthros___MacTests.m"; sourceTree = "<group>"; };
 		B92BB9DF1B4B3A3C00B87CA8 /* liborthros_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liborthros_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B94073C81B5612A500D38EF6 /* RSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
-		B94073C91B5612A500D38EF6 /* RSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSA.m; sourceTree = "<group>"; };
 		B951F4CC1A9A672000FB4DBA /* KVNProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNProgress.h; sourceTree = "<group>"; };
 		B951F4CD1A9A672000FB4DBA /* KVNProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVNProgress.m; sourceTree = "<group>"; };
 		B951F4CE1A9A672000FB4DBA /* KVNProgressConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNProgressConfiguration.h; sourceTree = "<group>"; };
@@ -266,6 +277,12 @@
 		B9E00C6D1AF5CD3700CE042D /* LTHKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHKeychainUtils.m; sourceTree = "<group>"; };
 		B9E00C6E1AF5CD3700CE042D /* LTHPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHPasscodeViewController.h; sourceTree = "<group>"; };
 		B9E00C6F1AF5CD3700CE042D /* LTHPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHPasscodeViewController.m; sourceTree = "<group>"; };
+		B9E7DE2C1B61663700F463A7 /* CreditsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsTableViewController.h; sourceTree = "<group>"; };
+		B9E7DE2D1B61663700F463A7 /* CreditsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsTableViewController.m; sourceTree = "<group>"; };
+		B9F1F24B1B6C816200C564D4 /* SupportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportTableViewController.h; sourceTree = "<group>"; };
+		B9F1F24C1B6C816200C564D4 /* SupportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportTableViewController.m; sourceTree = "<group>"; };
+		B9F7E45C1B6895EA00EDD63D /* APISettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APISettingsTableViewController.h; sourceTree = "<group>"; };
+		B9F7E45D1B6895EA00EDD63D /* APISettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APISettingsTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +345,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B90E9FCC1B5B8C0100EAD3BB /* ed25519 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ed25519;
+			sourceTree = "<group>";
+		};
 		B92BB9B11B4B39D900B87CA8 /* Orthros - Mac */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +429,7 @@
 		B97611B71B478D6100971064 /* liborthros */ = {
 			isa = PBXGroup;
 			children = (
+				B90E9FCC1B5B8C0100EAD3BB /* ed25519 */,
 				B97611B81B478D6100971064 /* liborthros.h */,
 				B97611BA1B478D6100971064 /* liborthros.m */,
 			);
@@ -668,8 +693,7 @@
 			children = (
 				B990AC311A905E5F00E7EEBE /* bithashTableViewController.h */,
 				B990AC321A905E5F00E7EEBE /* bithashTableViewController.m */,
-				B97708B71AD3549B0090E950 /* ConfigureTableViewController.h */,
-				B97708B81AD3549B0090E950 /* ConfigureTableViewController.m */,
+				B9F1F24E1B6C816B00C564D4 /* Configure Controllers */,
 				B9DD4A901ADF6E31000F2D97 /* Setup Controllers */,
 				B9DD4A8E1ADF6E0D000F2D97 /* Messaging Controllers */,
 				B9DD4A8F1ADF6E20000F2D97 /* Contacts Controllers */,
@@ -711,8 +735,6 @@
 				B96E13311A9153260083B4EF /* DeviceIdentifiers.m */,
 				B996C4C41AE3036900C376F6 /* UAObfuscatedString.h */,
 				B996C4C51AE3036900C376F6 /* UAObfuscatedString.m */,
-				B94073C81B5612A500D38EF6 /* RSA.h */,
-				B94073C91B5612A500D38EF6 /* RSA.m */,
 			);
 			name = Extentions;
 			path = Controllers;
@@ -770,6 +792,21 @@
 				B9E00C6F1AF5CD3700CE042D /* LTHPasscodeViewController.m */,
 			);
 			path = LTHPasscodeViewController;
+			sourceTree = "<group>";
+		};
+		B9F1F24E1B6C816B00C564D4 /* Configure Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B97708B71AD3549B0090E950 /* ConfigureTableViewController.h */,
+				B97708B81AD3549B0090E950 /* ConfigureTableViewController.m */,
+				B9E7DE2C1B61663700F463A7 /* CreditsTableViewController.h */,
+				B9E7DE2D1B61663700F463A7 /* CreditsTableViewController.m */,
+				B9F7E45C1B6895EA00EDD63D /* APISettingsTableViewController.h */,
+				B9F7E45D1B6895EA00EDD63D /* APISettingsTableViewController.m */,
+				B9F1F24B1B6C816200C564D4 /* SupportTableViewController.h */,
+				B9F1F24C1B6C816200C564D4 /* SupportTableViewController.m */,
+			);
+			name = "Configure Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -868,9 +905,9 @@
 			buildConfigurationList = B9857A641A903F1F005FDB35 /* Build configuration list for PBXNativeTarget "Orthros" */;
 			buildPhases = (
 				B9857A3D1A903F1F005FDB35 /* Sources */,
-				B9FC3B881B5633A5005220E3 /* ShellScript */,
 				B9857A3E1A903F1F005FDB35 /* Frameworks */,
 				B9857A3F1A903F1F005FDB35 /* Resources */,
+				B9F7E4871B69C2AD00EDD63D /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -926,6 +963,9 @@
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = 7A8DWQ7DS7;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.DataProtection = {
 								enabled = 1;
 							};
@@ -1005,22 +1045,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		B9FC3B881B5633A5005220E3 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		B92BB9AC1B4B39D800B87CA8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1029,6 +1053,7 @@
 				B92BB9BB1B4B39D900B87CA8 /* ViewController.m in Sources */,
 				B92BB9B81B4B39D900B87CA8 /* main.m in Sources */,
 				B92BB9B61B4B39D900B87CA8 /* AppDelegate.m in Sources */,
+				B9F1F24F1B6CABFF00C564D4 /* liborthros.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,6 +1110,7 @@
 				B98173401AD789970028ABC6 /* BDRSACryptor.m in Sources */,
 				B98173441AD789970028ABC6 /* NSString+Base64.m in Sources */,
 				B98173471AD789970028ABC6 /* NSData+BDJSONSerialization.m in Sources */,
+				B9E7DE2E1B61663700F463A7 /* CreditsTableViewController.m in Sources */,
 				B9857A4A1A903F1F005FDB35 /* AppDelegate.m in Sources */,
 				B981733E1AD789970028ABC6 /* BDCryptor.m in Sources */,
 				B96E13321A9153260083B4EF /* DeviceIdentifiers.m in Sources */,
@@ -1093,6 +1119,7 @@
 				B981733C1AD789970028ABC6 /* BDAESCBC256Cryptor.m in Sources */,
 				B90098C01B40A80300E27A29 /* UIImage+AlphaAdditions.m in Sources */,
 				B990AC2E1A905C4600E7EEBE /* GenerateRSAViewController.m in Sources */,
+				B9F1F24D1B6C816200C564D4 /* SupportTableViewController.m in Sources */,
 				B98173491AD789970028ABC6 /* NSDictionary+BDParseJSON.m in Sources */,
 				B97DD3971ADB0FB5002459FB /* MessageDetailTableViewController.m in Sources */,
 				B990AC361A908E3000E7EEBE /* KeyPreviewViewController.m in Sources */,
@@ -1105,11 +1132,11 @@
 				B981734D1AD789970028ABC6 /* BDError.m in Sources */,
 				B9857A471A903F1F005FDB35 /* main.m in Sources */,
 				B981734B1AD789970028ABC6 /* NSString+BDJSONSerialization.m in Sources */,
+				B9F7E45E1B6895EA00EDD63D /* APISettingsTableViewController.m in Sources */,
 				B951F4D01A9A672000FB4DBA /* KVNProgress.m in Sources */,
 				B990AC2B1A9051C700E7EEBE /* JNKeychain.m in Sources */,
 				B98173461AD789970028ABC6 /* NSArray+BDJSONSerialization.m in Sources */,
 				B98173421AD789970028ABC6 /* BDSHA512Cryptor.m in Sources */,
-				B94073CA1B5612A500D38EF6 /* RSA.m in Sources */,
 				B990AC331A905E5F00E7EEBE /* bithashTableViewController.m in Sources */,
 				B9E00C711AF5CD3700CE042D /* LTHPasscodeViewController.m in Sources */,
 				B9075F2E1B0ACEDD00F7B7D8 /* MyQRViewController.m in Sources */,
@@ -1199,6 +1226,7 @@
 				INFOPLIST_FILE = "Orthros - Mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "ninja.haifisch.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1216,6 +1244,7 @@
 				INFOPLIST_FILE = "Orthros - Mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "ninja.haifisch.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1239,6 +1268,7 @@
 				INFOPLIST_FILE = "Orthros - MacTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "ninja.haifisch.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orthros - Mac.app/Contents/MacOS/Orthros - Mac";
@@ -1260,6 +1290,7 @@
 				INFOPLIST_FILE = "Orthros - MacTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "ninja.haifisch.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orthros - Mac.app/Contents/MacOS/Orthros - Mac";
@@ -1269,6 +1300,7 @@
 		B92BB9DD1B4B3A3C00B87CA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1286,6 +1318,7 @@
 		B92BB9DE1B4B3A3C00B87CA8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1344,6 +1377,7 @@
 				INFOPLIST_FILE = liborthrosTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ninja.haifisch.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1361,6 +1395,7 @@
 				INFOPLIST_FILE = liborthrosTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ninja.haifisch.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1463,7 +1498,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ninja.orthros.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Orthros;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9789be8f-8ae5-4aaf-a6d9-1a3d933d8412";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1489,7 +1524,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ninja.orthros.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Orthros;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9789be8f-8ae5-4aaf-a6d9-1a3d933d8412";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

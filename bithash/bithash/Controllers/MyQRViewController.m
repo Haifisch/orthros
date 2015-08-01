@@ -21,6 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
+    [self.tableView setSeparatorColor:[UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1]];
+    
     identify = [[DeviceIdentifiers alloc] init];
     self.title = @"My QR";
     CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];

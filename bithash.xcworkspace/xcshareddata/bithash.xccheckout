@@ -14,6 +14,8 @@
 		<string>https://github.com/Haifisch/orthros.git</string>
 		<key>3AD567A26F944B997A2284DC29BD1B703B49B5DA</key>
 		<string>https://github.com/Haifisch/orthros.git</string>
+		<key>FFA6D4484357D22DB8E98ABEB5C489D2F79D0BA1</key>
+		<string>https://github.com/getOrthros/liborthros.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>bithash.xcworkspace</string>
@@ -23,6 +25,8 @@
 		<string>../..</string>
 		<key>3AD567A26F944B997A2284DC29BD1B703B49B5DA</key>
 		<string>..</string>
+		<key>FFA6D4484357D22DB8E98ABEB5C489D2F79D0BA1</key>
+		<string>../bithash/liborthros/</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/Haifisch/orthros.git</string>
@@ -47,6 +51,14 @@
 			<string>3AD567A26F944B997A2284DC29BD1B703B49B5DA</string>
 			<key>IDESourceControlWCCName</key>
 			<string>bithash</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FFA6D4484357D22DB8E98ABEB5C489D2F79D0BA1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>liborthros</string>
 		</dict>
 	</array>
 </dict>

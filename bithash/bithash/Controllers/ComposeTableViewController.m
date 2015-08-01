@@ -27,8 +27,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
+    [self.tableView setSeparatorColor:[UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1]];
+    self.recievingIDBox.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Recieving Orthros ID" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     identify = [[DeviceIdentifiers alloc] init];
-    orthros = [[liborthros alloc] initWithUUID:[identify UUID]];
+    if ([JNKeychain loadValueForKey:@"api_endpoint"]) {
+        orthros = [[liborthros alloc] initWithAPIAddress:[JNKeychain loadValueForKey:@"api_endpoint"] withUUID:[identify UUID]];
+    } else {
+        orthros = [[liborthros alloc] initWithUUID:[identify UUID]];
+        [orthros setAPIAdress:@"https://api.orthros.ninja"];
+    }
     self.title = @"New Message";
     if (self.isReply) {
         [self.recievingIDBox setEnabled:NO];
@@ -55,7 +64,6 @@
 }
 - (IBAction)attemptSending:(id)sender {
     if ([self.messageBox.text length] > 0 && [self.recievingIDBox.text length] > 0) {
-        [KVNProgress showWithStatus:@"Sending"];
         [self sendMessage:self.messageBox.text withUUID:self.recievingIDBox.text];
     } else if ([self isUUID:self.recievingIDBox.text]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"ID is invalid" message:@"Make sure the ID is valid before sending" preferredStyle:UIAlertControllerStyleAlert];
@@ -85,7 +93,7 @@
 
 -(void)sendMessage:(NSString *)msg withUUID:(NSString *)to_uuid {
     BDRSACryptor *RSACryptor = [[BDRSACryptor alloc] init];
-    NSString *pub = [orthros publicKeyFor:to_uuid];
+    NSString *pub = [orthros publicKeyForUserID:to_uuid];
     if (!pub) {
         [KVNProgress showErrorWithStatus:@"User's pub was not found... try again later."];
     } else {
@@ -97,25 +105,16 @@
             [KVNProgress showErrorWithStatus:@"Error'd out! Try again." completion:^{}];
         } else {
             NSString *enc_key = [orthros genNonce];
-            if (![orthros send:cipherText toUser:to_uuid withKey:[RSACryptor decrypt:enc_key key:[JNKeychain loadValueForKey:PRIV_KEY] error:nil]]) {
+            if (![orthros sendMessage:cipherText toUser:to_uuid withKey:[RSACryptor decrypt:enc_key key:[JNKeychain loadValueForKey:PRIV_KEY] error:nil]]) {
                 [KVNProgress showErrorWithStatus:@"Error'd out! Try again." completion:^{ // give better diagnostics when this happens pl0x
-                    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                        [KVNProgress dismiss];
-                    }];
-                    
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 }];
             }else {
-                [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                    [KVNProgress showSuccess];
-                }];
+                [KVNProgress showSuccess];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             }
         }
     }
-    [KVNProgress dismiss];
-}
-
-- (IBAction)cancelCompose:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -129,10 +128,10 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     NSInteger textlength = [textView.text length] - range.length + [text length];
-    if (textlength > 383) {
+    if (textlength > 350) {
         return NO;
     }
-    self.counterLabel.text = [NSString stringWithFormat:@"%li/383", (long)textlength];
+    self.counterLabel.text = [NSString stringWithFormat:@"%li/350", (long)textlength];
     return YES;
 }
 

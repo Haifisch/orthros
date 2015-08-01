@@ -2,18 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "1429087325_key_exchange-48.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "1429087328_key_exchange-64.png"
+      "filename" : "text_bubble48.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "1429087374_key_exchange-128.png"
+      "filename" : "text_bubble64.png"
     }
   ],
   "info" : {

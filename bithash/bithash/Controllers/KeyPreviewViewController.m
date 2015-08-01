@@ -20,6 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Public Key", @"Private Key", nil]];
+    self.segmentedControl.selectedSegmentIndex = 0;
+    [self.segmentedControl addTarget:self action:@selector(segmentedValueChanged:) forControlEvents:UIControlEventValueChanged];
+    self.navigationItem.titleView = self.segmentedControl;
     [self segmentedValueChanged:self.segmentedControl];
     
     // Do any additional setup after loading the view.

@@ -10,11 +10,13 @@
 #import "liborthros.h"
 @implementation ViewController {
     liborthros *orthros;
+    NSUserDefaults *defaults;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    orthros = [[liborthros alloc] initWithUUID:[[NSUserDefaults standardUserDefaults] objectForKey:@"UUID"]];
+    defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ninja.orthros.group.suite"];
+    orthros = [[liborthros alloc] initWithUUID:[defaults objectForKey:@"UUID"]];
     
     // Do any additional setup after loading the view.
 }

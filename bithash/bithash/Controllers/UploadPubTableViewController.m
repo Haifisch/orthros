@@ -18,6 +18,7 @@
 {
     DeviceIdentifiers *identify;
     liborthros *orthros;
+    NSUserDefaults *defaults;
 }
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 @end
@@ -27,9 +28,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"Submit Keys"];
+    self.tableView.backgroundColor = [UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1];
+    [self.tableView setSeparatorColor:[UIColor colorWithRed:33/255.0f green:33/255.0f blue:33/255.0f alpha:1]];
+    defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ninja.orthros.group.suite"];
     identify = [[DeviceIdentifiers alloc] init];
-    orthros = [[liborthros alloc] initWithUUID:[identify UUID]];
-    [self updateStatusWithString:@"Querying server for exsisting keys... One sec."];
+    if ([JNKeychain loadValueForKey:@"api_endpoint"]) {
+        orthros = [[liborthros alloc] initWithAPIAddress:[JNKeychain loadValueForKey:@"api_endpoint"] withUUID:[identify UUID]];
+        [orthros setOrthrosID:[identify UUID]];
+    } else {
+        orthros = [[liborthros alloc] initWithUUID:[identify UUID]];
+        [orthros setOrthrosID:[identify UUID]];
+        [orthros setAPIAdress:@"https://api.orthros.ninja"];
+    }
+    [self updateStatusWithString:@"Querying server for existing keys... One sec."];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -48,29 +59,33 @@
 }
 
 -(void)queryServerForUUID:(NSString*)UUID{
-    if ([orthros check]) {
+    if ([orthros checkForUUID]) {
         [self updateStatusWithString:@"Keys exist, You're all set!"];
         [self updateCellsForNextStep:YES];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [defaults setBool:YES forKey:@"successfulSetup"];
     }else {
         [self updateStatusWithString:@"No keys exist, please upload them."];
         [self updateCellsForNextStep:NO];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [defaults setBool:NO forKey:@"successfulSetup"];
     }
+    [defaults synchronize];
 }
 
 -(void)attemptUploadForUUID:(NSString*)UUID {
-    if ([orthros upload:[JNKeychain loadValueForKey:PUB_KEY]]) {
+    if ([orthros uploadPublicKey:[JNKeychain loadValueForKey:PUB_KEY]]) {
         [self updateStatusWithString:@"Public key uploaded!"];
         [self updateCellsForNextStep:YES];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"successfulSetup"];
+        [defaults setBool:YES forKey:@"successfulSetup"];
     }else {
         [self updateStatusWithString:@"Failed to upload public key!"];
         [self updateCellsForNextStep:NO];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"successfulSetup"];
+        [defaults setBool:NO forKey:@"successfulSetup"];
     }
+    [defaults synchronize];
 }
 
 -(void)updateStatusWithString:(NSString*)newString {
@@ -112,6 +127,7 @@
         // Setting a passcode is highly suggested, by setting one you're adding another layer of security to Orthros and allows protection to accessing the application. If you have a device with Touch ID, setting a passcode will allow you to unlock Orthros with your finger!
         rsaLabel.adjustsFontSizeToFitWidth = YES;
         [rsaLabel setNumberOfLines:6];
+        rsaLabel.textColor = [UIColor whiteColor];
         rsaLabel.textAlignment = NSTextAlignmentCenter;
         [headerView addSubview:rsaLabel];
         return headerView;
